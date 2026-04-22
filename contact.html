@@ -4,30 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Kat's O-Boutique</title>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="kats-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --gold:       #c09838;
-  --gold-hi:    #e8c050;
-  --gold-soft:  #d4b060;
-  --bg:         #130e06;
-  --bg2:        #1c1508;
-  --bg3:        #211908;
-  --surface:    #1a1208;
-  --border:     rgba(200,160,48,.12);
-  --cream:      #f5ead8;
-  --cream-dim:  rgba(245,234,216,.4);
-  --cream-faint:rgba(245,234,216,.16);
-  --fab-dark:   #4e4412;
-  --fab-mid:    #645a18;
-  --fab-light:  #7a6e22;
+  --sky:         #b8dff0;
+  --sky-light:   #d6eef9;
+  --sky-soft:    rgba(184,223,240,.18);
+  --blush:       #f5c8d8;
+  --blush-deep:  #e8a0bc;
+  --blush-mid:   #f0b4cb;
+  --blush-soft:  rgba(245,200,216,.22);
+  --lavender:    #d8c8f0;
+  --lav-soft:    rgba(216,200,240,.2);
+  --mint:        #b8e8d4;
+  --white:       #fdfaff;
+  --white-warm:  #fff8fc;
+  --ink:         #2a1a2e;
+  --ink-soft:    #5a3a5e;
+  --ink-dim:     rgba(42,26,46,.45);
+  --ink-faint:   rgba(42,26,46,.2);
+  --border:      rgba(216,200,240,.35);
+  --surface:     rgba(253,250,255,.85);
 }
 
 html, body {
-  background: var(--bg);
-  color: var(--cream);
+  background: linear-gradient(160deg, var(--sky-light) 0%, #f5dce8 45%, var(--lav-soft) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
   font-family: 'Cormorant Garamond', serif;
   min-height: 100%;
 }
@@ -36,28 +42,35 @@ html, body {
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem 2rem;
-  background: linear-gradient(to bottom, rgba(19,14,6,.96), rgba(19,14,6,.0));
-  backdrop-filter: blur(4px);
+  padding: .95rem 2rem;
+  background: rgba(253,250,255,.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid var(--border);
+  box-shadow: 0 2px 18px rgba(232,160,188,.15);
 }
 .nav-logo {
-  font-family: 'Dancing Script', cursive;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--cream);
+  display: flex; align-items: center; gap: .6rem;
   text-decoration: none;
-  text-shadow: 0 0 20px rgba(200,160,48,.25);
+}
+.nav-logo img {
+  height: 40px; width: auto; object-fit: contain;
+}
+.nav-logo-text {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700; font-size: 1.35rem;
+  color: var(--ink);
 }
 .nav-links {
   display: flex; gap: 2rem; list-style: none;
 }
 .nav-links a {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .72rem; letter-spacing: .4em; text-transform: uppercase;
-  color: var(--cream-dim); text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: .68rem; letter-spacing: .38em; text-transform: uppercase;
+  color: var(--ink-dim); text-decoration: none;
   transition: color .2s;
 }
-.nav-links a:hover, .nav-links a.active { color: var(--gold-hi); }
+.nav-links a:hover, .nav-links a.active { color: var(--blush-deep); }
 
 /* ─── HERO STRIP ─── */
 .hero {
@@ -66,44 +79,49 @@ nav {
   align-items: center; justify-content: flex-end;
   padding: 0 1.5rem 3rem;
   text-align: center;
-  background: linear-gradient(to bottom, var(--fab-dark) 0%, var(--bg2) 55%, var(--bg) 100%);
+  background: linear-gradient(160deg, var(--sky) 0%, var(--blush) 55%, var(--lavender) 100%);
   position: relative; overflow: hidden;
 }
-/* Subtle vignette on the hero */
+/* Polka dot texture */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,.3) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
 .hero::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(19,14,6,.55) 0%, transparent 50%, rgba(19,14,6,.3) 100%);
+  background: linear-gradient(to bottom, rgba(253,250,255,.1) 0%, transparent 50%, rgba(253,250,255,.35) 100%);
   pointer-events: none;
 }
 .hero-content { position: relative; z-index: 1; }
 .eyebrow {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .72rem; letter-spacing: .5em; text-transform: uppercase;
-  color: var(--gold-soft); margin-bottom: 1rem; display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: .68rem; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 1rem; display: block; opacity: .75;
 }
 .hero h1 {
   font-family: 'Dancing Script', cursive;
   font-weight: 700;
   font-size: clamp(3rem, 9vw, 6.5rem);
   line-height: 1;
-  color: var(--cream);
-  text-shadow: 0 0 50px rgba(200,160,48,.28), 0 2px 10px rgba(0,0,0,.7);
+  color: var(--ink);
+  text-shadow: 0 2px 20px rgba(232,160,188,.35), 0 1px 6px rgba(255,255,255,.5);
 }
 .hero-sub {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300; font-style: italic;
   font-size: clamp(.85rem, 1.8vw, 1.1rem);
-  letter-spacing: .2em; text-transform: uppercase;
-  color: var(--cream-dim); margin-top: 1rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-soft); margin-top: 1rem; opacity: .75;
 }
 
 /* ─── DIVIDER ─── */
 .divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold) 30%, var(--gold-hi) 50%, var(--gold) 70%, transparent);
-  opacity: .3;
-  margin: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--blush-deep) 30%, var(--blush-mid) 50%, var(--blush-deep) 70%, transparent);
+  opacity: .45;
 }
 
 /* ─── MAIN LAYOUT ─── */
@@ -121,177 +139,189 @@ main {
 .info-col h2 {
   font-family: 'Dancing Script', cursive;
   font-weight: 700; font-size: 2rem;
-  color: var(--cream); margin-bottom: 1rem;
+  color: var(--ink); margin-bottom: 1rem;
 }
 .info-col p {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300; font-style: italic;
   font-size: 1.05rem; line-height: 1.8;
-  color: var(--cream-dim); margin-bottom: 2rem;
+  color: var(--ink-soft); margin-bottom: 2rem; opacity: .85;
 }
 
 .contact-block { margin-bottom: 1.8rem; }
 .contact-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .62rem; letter-spacing: .5em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: .4rem; display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: .6rem; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--blush-deep); margin-bottom: .4rem; display: block;
 }
 .contact-value {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.05rem; color: var(--cream);
+  font-size: 1.05rem; color: var(--ink);
   letter-spacing: .04em;
 }
 .contact-value a {
-  color: var(--cream); text-decoration: none;
+  color: var(--ink); text-decoration: none;
   transition: color .2s;
 }
-.contact-value a:hover { color: var(--gold-hi); }
+.contact-value a:hover { color: var(--blush-deep); }
 
 .hours-grid {
   display: grid; grid-template-columns: auto 1fr;
   gap: .3rem 1.2rem; margin-top: .5rem;
 }
 .hours-day {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--cream-dim);
+  font-family: 'Nunito', sans-serif;
+  font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-dim);
 }
 .hours-time {
   font-family: 'Cormorant Garamond', serif;
-  font-size: .92rem; color: var(--cream);
+  font-size: .95rem; color: var(--ink);
 }
 
-/* Social icons row */
+/* Social icons */
 .socials { display: flex; gap: .9rem; margin-top: 1rem; }
 .social-btn {
   width: 36px; height: 36px;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
+  background: rgba(253,250,255,.6);
   display: flex; align-items: center; justify-content: center;
-  color: var(--cream-dim); text-decoration: none;
+  color: var(--ink-dim); text-decoration: none;
   font-size: .85rem; border-radius: 50%;
   transition: border-color .2s, color .2s, background .2s;
 }
 .social-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold-hi);
-  background: rgba(200,160,48,.08);
+  border-color: var(--blush-deep);
+  color: var(--blush-deep);
+  background: rgba(232,160,188,.12);
 }
 
 /* ─── FORM COLUMN ─── */
 .form-col h2 {
   font-family: 'Dancing Script', cursive;
   font-weight: 700; font-size: 2rem;
-  color: var(--cream); margin-bottom: 1.8rem;
+  color: var(--ink); margin-bottom: 1.8rem;
 }
 
 .field { margin-bottom: 1.2rem; }
 .field label {
   display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .62rem; letter-spacing: .45em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: .4rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: .6rem; letter-spacing: .45em; text-transform: uppercase;
+  color: var(--blush-deep); margin-bottom: .4rem;
 }
 .field input,
 .field select,
 .field textarea {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--cream);
+  background: rgba(253,250,255,.75);
+  border: 1.5px solid var(--border);
+  color: var(--ink);
   font-family: 'Cormorant Garamond', serif;
   font-size: .98rem;
   letter-spacing: .04em;
-  padding: .75rem 1rem;
+  padding: .78rem 1rem;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
+  transition: border-color .2s, box-shadow .2s, background .2s;
   appearance: none;
   -webkit-appearance: none;
-  border-radius: 0;
+  border-radius: 4px;
 }
 .field input::placeholder,
 .field textarea::placeholder {
-  color: var(--cream-faint);
+  color: var(--ink-faint);
   font-style: italic;
 }
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 2px rgba(200,160,48,.08);
+  border-color: var(--blush-deep);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(232,160,188,.14);
 }
 .field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0 L6 7 L12 0' fill='none' stroke='%23c09838' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0 L6 7 L12 0' fill='none' stroke='%23e8a0bc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.5rem;
   cursor: pointer;
 }
-.field select option { background: var(--bg2); color: var(--cream); }
+.field select option { background: var(--white-warm); color: var(--ink); }
 .field textarea { resize: vertical; min-height: 120px; }
 
-/* Inline two-col fields */
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
 @media(max-width:420px){ .field-row { grid-template-columns:1fr; } }
 
 .submit-btn {
   display: block; width: 100%;
   padding: .9rem 1rem;
-  background: var(--gold);
-  color: var(--bg);
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
-  font-size: 1rem; letter-spacing: .35em;
+  background: var(--blush-deep);
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: .82rem; letter-spacing: .35em; text-transform: uppercase;
   text-align: center; border: none;
-  cursor: pointer;
-  transition: background .2s, letter-spacing .22s;
+  cursor: pointer; border-radius: 4px;
+  transition: background .2s, letter-spacing .22s, box-shadow .2s;
   margin-top: .5rem;
+  box-shadow: 0 4px 16px rgba(232,160,188,.35);
 }
-.submit-btn:hover { background: var(--gold-hi); letter-spacing: .48em; }
+.submit-btn:hover {
+  background: var(--blush-mid);
+  letter-spacing: .46em;
+  box-shadow: 0 6px 22px rgba(232,160,188,.48);
+}
 
-/* Success toast */
+/* Toast */
 #toast {
   position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--surface); border: 1px solid var(--gold);
-  color: var(--cream); padding: .8rem 2rem;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .78rem; letter-spacing: .3em; text-transform: uppercase;
+  background: var(--white); border: 1.5px solid var(--blush-deep);
+  color: var(--ink); padding: .8rem 2rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: .75rem; letter-spacing: .28em; text-transform: uppercase;
   opacity: 0; pointer-events: none;
   transition: opacity .4s, transform .4s;
-  white-space: nowrap; z-index: 200;
+  white-space: nowrap; z-index: 200; border-radius: 30px;
+  box-shadow: 0 8px 28px rgba(232,160,188,.3);
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ─── FOOTER ─── */
 footer {
-  border-top: 1px solid var(--border);
+  border-top: 1.5px solid var(--border);
   padding: 2rem 1.5rem;
   text-align: center;
+  background: rgba(253,250,255,.5);
+  backdrop-filter: blur(8px);
 }
 .footer-logo {
   font-family: 'Dancing Script', cursive;
   font-weight: 700; font-size: 1.4rem;
-  color: var(--gold-soft);
+  color: var(--blush-deep);
   display: block; margin-bottom: .6rem;
 }
 .footer-copy {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: .62rem; letter-spacing: .4em; text-transform: uppercase;
-  color: var(--cream-faint);
+  font-family: 'Nunito', sans-serif;
+  font-size: .6rem; letter-spacing: .38em; text-transform: uppercase;
+  color: var(--ink-dim);
 }
 </style>
 </head>
 <body>
 
-<!-- ── Nav ── -->
+<!-- Nav -->
 <nav>
-  <a class="nav-logo" href="index.html">Kat's O-Boutique</a>
+  <a class="nav-logo" href="index.html">
+    <img src="kats-logo.png" alt="Kat's O-Boutique">
+    <span class="nav-logo-text">Kat's O-Boutique</span>
+  </a>
   <ul class="nav-links">
     <li><a href="index.html">Shop</a></li>
     <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ── Hero ── -->
+<!-- Hero -->
 <div class="hero">
   <div class="hero-content">
     <span class="eyebrow">We'd love to hear from you</span>
@@ -301,7 +331,7 @@ footer {
 </div>
 <div class="divider"></div>
 
-<!-- ── Main Content ── -->
+<!-- Main Content -->
 <main>
 
   <!-- Info Column -->
@@ -343,13 +373,11 @@ footer {
     <div class="contact-block">
       <span class="contact-label">Follow Us</span>
       <div class="socials">
-        <!-- Facebook -->
         <a class="social-btn" href="#" aria-label="Facebook">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
           </svg>
         </a>
-        <!-- Instagram -->
         <a class="social-btn" href="#" aria-label="Instagram">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -357,7 +385,6 @@ footer {
             <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
           </svg>
         </a>
-        <!-- TikTok -->
         <a class="social-btn" href="#" aria-label="TikTok">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.79a4.85 4.85 0 01-1.02-.1z"/>
@@ -406,20 +433,19 @@ footer {
         <textarea id="message" name="message" placeholder="Tell us how we can help…" required></textarea>
       </div>
 
-      <button type="submit" class="submit-btn">Send Message</button>
+      <button type="submit" class="submit-btn">Send Message ✨</button>
     </form>
   </div>
 
 </main>
 
-<!-- ── Footer ── -->
+<!-- Footer -->
 <footer>
   <span class="footer-logo">Kat's O-Boutique</span>
   <p class="footer-copy">© 2025 Kat's O-Boutique · Zamboanga City, Philippines</p>
 </footer>
 
-<!-- Toast notification -->
-<div id="toast">Message sent — we'll be in touch soon!</div>
+<div id="toast">Message sent — we'll be in touch soon! 🎀</div>
 
 <script>
 const form  = document.getElementById('contact-form');
@@ -445,7 +471,7 @@ form.addEventListener('submit', async e => {
     }
   } catch(_) {}
 
-  btn.textContent = 'Send Message';
+  btn.textContent = 'Send Message ✨';
   btn.style.opacity = '1';
   btn.disabled = false;
 });
