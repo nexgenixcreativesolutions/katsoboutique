@@ -4,96 +4,146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kat's O-Boutique — New Arrivals</title>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="kats-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --chrome-hi:   #f0ece4;
-  --chrome-mid:  #c4beb4;
-  --chrome-low:  #848078;
-  --chrome-dark: #3c3830;
-  --gold:        #c09838;
-  --gold-hi:     #e8c050;
-  --gold-soft:   #d4b060;
-  --bg:          #130e06;
-  --bg2:         #1c1508;
-  --cream:       #f5ead8;
-  --cream-dim:   rgba(245,234,216,.42);
-  --cream-faint: rgba(245,234,216,.16);
-  --fab-dark:    #4e4412;
-  --fab-mid:     #645a18;
-  --fab-light:   #7a6e22;
+  /* Kat's logo palette */
+  --sky:        #b8dff0;
+  --sky-light:  #d6eef9;
+  --blush:      #f5c8d8;
+  --blush-deep: #e8a0bc;
+  --blush-mid:  #f0b4cb;
+  --lavender:   #d8c8f0;
+  --lav-soft:   #e8e0f8;
+  --mint:       #b8e8d4;
+  --butter:     #f8e8b0;
+  --butter-deep:#f0d080;
+  --peach:      #f8c8a8;
+  --white:      #fdfaff;
+  --white-dim:  rgba(253,250,255,.65);
+  --white-faint:rgba(253,250,255,.32);
+
+  /* text */
+  --ink:        #2a1a2e;
+  --ink-soft:   #5a3a5e;
+  --ink-dim:    rgba(42,26,46,.45);
+
+  /* fabric for zipper */
+  --fab-a:      #f0b4cb;
+  --fab-b:      #e89ab8;
+  --fab-c:      #d47a9e;
+
+  /* bg gradient matching logo */
+  --bg-top:     #b8dff0;
+  --bg-mid:     #f0d0e0;
+  --bg-bot:     #e8d8f8;
+
+  /* chrome */
+  --chrome-hi:  #fdfaff;
+  --chrome-mid: #d8d0e0;
+  --chrome-low: #a899b4;
+  --chrome-dark:#6a5a78;
 }
 
-html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormorant Garamond',serif; }
-
-/* ═══════════════════════════════════════
-   CATALOG — the real page content
-   Lives in normal document flow, scrolls
-   behind the zipper overlay until revealed
-═══════════════════════════════════════ */
-#page {
-  /* Catalog is behind the overlay; becomes scrollable once zipper done */
-  position: relative; z-index: 0;
+html, body {
+  width:100%; height:100%;
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
+  background-attachment: fixed;
+  font-family:'Cormorant Garamond',serif;
+  color: var(--ink);
 }
 
-/* ── Catalog top padding so products start visually below the header ── */
-#catalog { background:var(--bg); padding:0 0 5rem; }
+/* ═══════════════════════
+   LOGO HEADER BAR
+═══════════════════════ */
+#site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(253,250,255,.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(232,160,188,.22);
+  padding: .55rem 1.5rem;
+  display: flex; align-items: center; gap: .75rem;
+  box-shadow: 0 2px 18px rgba(232,160,188,.15);
+}
+#site-header img {
+  height: 46px; width: auto; object-fit: contain;
+}
+.header-tagline {
+  font-family:'Nunito',sans-serif; font-size:.65rem;
+  letter-spacing:.38em; text-transform:uppercase;
+  color: var(--blush-deep); opacity:.82;
+}
 
-.catalog-header { text-align:center; padding:5rem 1.5rem 2.5rem; }
+/* ═══════════════════════
+   CATALOG PAGE
+═══════════════════════ */
+#page { position:relative; z-index:0; }
+#catalog { padding: 0 0 6rem; }
+
+.catalog-header { text-align:center; padding: 5rem 1.5rem 2.5rem; }
 .eyebrow {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.72rem; letter-spacing:.5em; text-transform:uppercase;
-  color:var(--gold-soft); margin-bottom:.6rem; display:block;
+  font-family:'Nunito',sans-serif;
+  font-size:.68rem; letter-spacing:.52em; text-transform:uppercase;
+  color: var(--blush-deep); margin-bottom:.65rem; display:block;
 }
 .catalog-title {
   font-family:'Dancing Script',cursive; font-weight:700;
-  font-size:clamp(2.6rem,8vw,6rem);
-  color:var(--cream); letter-spacing:.02em; line-height:1;
+  font-size: clamp(2.8rem,8vw,6rem);
+  color: var(--ink); letter-spacing:.02em; line-height:1;
+  text-shadow: 0 2px 12px rgba(232,160,188,.35);
 }
 
+/* Tabs */
 .cat-tabs {
   display:flex; justify-content:center;
-  border-bottom:1px solid rgba(200,160,48,.1);
+  border-bottom: 2px solid rgba(216,200,240,.4);
+  gap:.2rem;
 }
 .cat-tab {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:.7rem; letter-spacing:.4em; text-transform:uppercase;
-  color:var(--cream-faint); padding:.9rem 1.5rem;
-  cursor:pointer; border-bottom:2px solid transparent;
-  transition:color .25s, border-color .25s; user-select:none; white-space:nowrap;
+  font-family:'Nunito',sans-serif;
+  font-size:.7rem; letter-spacing:.36em; text-transform:uppercase;
+  color: var(--ink-dim); padding:.88rem 1.4rem;
+  cursor:pointer; border-bottom: 2.5px solid transparent;
+  margin-bottom:-2px;
+  transition: color .25s, border-color .25s; user-select:none; white-space:nowrap;
 }
-.cat-tab.active   { color:var(--gold-hi); border-bottom-color:var(--gold); }
-.cat-tab:hover:not(.active) { color:rgba(245,234,216,.58); }
+.cat-tab.active   { color: var(--ink); border-bottom-color: var(--blush-deep); }
+.cat-tab:hover:not(.active) { color: var(--ink-soft); }
 
 .cat-section { display:none; }
 .cat-section.active { display:block; }
 
-/* ── Clothing Rack (Tops) ── */
+/* ── Clothing Rack ── */
 .rack-scene { padding:0 1rem 2rem; }
 .rack-rail-wrap { padding:2rem 1rem 0; position:relative; }
 .rack-rail {
-  position:relative; height:12px;
-  background:linear-gradient(to bottom,#d8d4cc,#a8a298 35%,#706860 72%,#4e4840);
-  border-radius:6px;
-  box-shadow:0 5px 16px rgba(0,0,0,.7),inset 0 2px 0 rgba(255,255,255,.22);
+  position:relative; height:10px;
+  background: linear-gradient(to bottom,#e8e0f0,#c0b4cc 40%,#9888a8 75%,#786888);
+  border-radius:5px;
+  box-shadow: 0 4px 14px rgba(120,104,136,.4), inset 0 2px 0 rgba(255,255,255,.45);
 }
 .rack-rail::before,.rack-rail::after {
-  content:''; position:absolute; top:-18px; width:14px; height:48px;
-  background:linear-gradient(to right,#807870,#c8c0b0 45%,#807870);
-  border-radius:3px; box-shadow:0 4px 10px rgba(0,0,0,.6);
+  content:''; position:absolute; top:-16px; width:12px; height:42px;
+  background: linear-gradient(to right,#b4a8c4,#e0d8ec 45%,#b4a8c4);
+  border-radius:3px; box-shadow:0 3px 8px rgba(120,104,136,.5);
 }
-.rack-rail::before { left:-6px; } .rack-rail::after { right:-6px; }
+.rack-rail::before { left:-5px; } .rack-rail::after { right:-5px; }
 
-.hangers-row { display:flex; justify-content:space-around; align-items:flex-start; padding:0 .5rem; gap:.3rem; }
+.hangers-row {
+  display:flex; justify-content:space-around; align-items:flex-start;
+  padding:0 .5rem; gap:.3rem;
+}
 .hanger-item {
   flex:1; max-width:130px; cursor:pointer;
   display:flex; flex-direction:column; align-items:center;
   position:relative; transform-origin:top center;
-  transition:transform .35s cubic-bezier(.23,1,.32,1),filter .35s;
+  transition: transform .35s cubic-bezier(.23,1,.32,1), filter .35s;
 }
-.hanger-item:hover  { transform:rotate(-3deg) scale(1.05); filter:drop-shadow(0 10px 20px rgba(0,0,0,.7)); }
+.hanger-item:hover  { transform:rotate(-3deg) scale(1.05); filter:drop-shadow(0 10px 22px rgba(216,160,200,.55)); }
 .hanger-item:active { transform:rotate(1deg) scale(.97); }
 @keyframes sway {
   0%{transform:rotate(-1.8deg);}50%{transform:rotate(1.4deg);}100%{transform:rotate(-1.8deg);}
@@ -105,70 +155,85 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 
 .hanger-hook{width:60px;height:36px;flex-shrink:0;}
 .hanger-garment{width:100%;margin-top:-3px;}
-.hanger-garment svg{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 18px rgba(0,0,0,.6));}
+.hanger-garment svg{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 14px rgba(180,140,200,.45));}
 .h-label{margin-top:.55rem;text-align:center;padding-bottom:.5rem;}
-.h-label .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.82rem,2.2vw,1.05rem);color:var(--cream);letter-spacing:.08em;line-height:1;}
-.h-label .iprice{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.66rem;letter-spacing:.28em;color:var(--gold-hi);margin-top:.2rem;}
-.itag{position:absolute;top:40px;right:2px;font-family:'Barlow Condensed',sans-serif;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;padding:.16rem .42rem;z-index:10;}
-.itag.new{background:var(--gold);color:var(--bg);}
-.itag.hot{background:#c47878;color:var(--cream);}
+.h-label .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.82rem,2.2vw,1.05rem);color:var(--ink);letter-spacing:.08em;line-height:1;}
+.h-label .iprice{font-family:'Nunito',sans-serif;font-weight:300;font-size:.65rem;letter-spacing:.26em;color:var(--blush-deep);margin-top:.2rem;}
+.itag{position:absolute;top:40px;right:2px;font-family:'Nunito',sans-serif;font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;padding:.16rem .42rem;z-index:10;border-radius:2px;}
+.itag.new{background:var(--blush-deep);color:white;}
+.itag.hot{background:var(--lavender);color:var(--ink);}
 
-/* ── Folded Shelf (Bottoms) ── */
+/* ── Folded Shelf ── */
 .shelf-scene{padding:2rem 1rem .5rem;}
-.shelf-unit{background:linear-gradient(to bottom,#201a0a,#180e04);border:1px solid rgba(200,160,48,.06);box-shadow:inset 0 0 50px rgba(0,0,0,.35),0 8px 30px rgba(0,0,0,.55);}
-.shelf-plank{height:14px;background:linear-gradient(to bottom,#4a4018,#363016 55%,#2a2610);box-shadow:0 6px 18px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.07);}
-.shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 20px,rgba(255,255,255,.02) 20px,rgba(255,255,255,.02) 21px);}
-.shelf-label{font-family:'Barlow Condensed',sans-serif;font-size:.62rem;letter-spacing:.5em;text-transform:uppercase;color:var(--cream-faint);padding:.75rem 1.2rem .35rem;}
+.shelf-unit{
+  background: linear-gradient(to bottom,rgba(253,250,255,.6),rgba(240,220,235,.5));
+  border:1px solid rgba(216,200,240,.35);
+  box-shadow: inset 0 0 40px rgba(216,200,240,.2), 0 6px 24px rgba(180,140,180,.2);
+  border-radius:4px; overflow:hidden;
+}
+.shelf-plank{
+  height:12px;
+  background: linear-gradient(to bottom,#d8c8e8,#c0b0d4 55%,#a898c0);
+  box-shadow: 0 5px 16px rgba(160,140,180,.45), inset 0 2px 0 rgba(255,255,255,.4);
+}
+.shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 22px,rgba(255,255,255,.05) 22px,rgba(255,255,255,.05) 23px);}
+.shelf-label{font-family:'Nunito',sans-serif;font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink-dim);padding:.75rem 1.2rem .35rem;}
 .folded-row{display:flex;gap:1px;padding:0 1px;}
-.folded-item{flex:1;position:relative;cursor:pointer;overflow:hidden;background:#181206;transition:transform .28s cubic-bezier(.23,1,.32,1),box-shadow .28s;}
-.folded-item:hover{transform:translateY(-7px) scale(1.025);box-shadow:0 16px 32px rgba(0,0,0,.7),0 0 0 1px rgba(200,160,48,.18);z-index:2;}
+.folded-item{
+  flex:1;position:relative;cursor:pointer;overflow:hidden;
+  background:rgba(253,250,255,.4);
+  transition:transform .28s cubic-bezier(.23,1,.32,1),box-shadow .28s;
+}
+.folded-item:hover{transform:translateY(-7px) scale(1.025);box-shadow:0 14px 28px rgba(180,140,200,.45),0 0 0 1.5px rgba(232,160,188,.35);z-index:2;}
 .folded-item:active{transform:translateY(-2px) scale(.99);}
 .folded-item svg{width:100%;height:auto;display:block;}
-.fold-info{padding:.55rem .7rem .65rem;background:linear-gradient(to bottom,transparent,rgba(19,14,6,.9));}
-.fold-info .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.78rem,1.9vw,.98rem);color:var(--cream);letter-spacing:.06em;line-height:1;}
-.fold-info .iprice{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.63rem;letter-spacing:.24em;color:var(--gold-hi);margin-top:.14rem;}
+.fold-info{padding:.55rem .7rem .65rem;background:linear-gradient(to bottom,transparent,rgba(253,250,255,.85));}
+.fold-info .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.78rem,1.9vw,.98rem);color:var(--ink);letter-spacing:.06em;line-height:1;}
+.fold-info .iprice{font-family:'Nunito',sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.22em;color:var(--blush-deep);margin-top:.14rem;}
 
 /* ── Shoe Display ── */
 .shoe-scene{padding:2rem 1rem .5rem;}
-.shoe-wall{background:linear-gradient(to bottom,#180f06,#120c04);border:1px solid rgba(200,160,48,.04);position:relative;padding:1.2rem 1rem 0;overflow:hidden;}
-.shoe-wall::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 39px,rgba(200,160,48,.018) 39px,rgba(200,160,48,.018) 40px),repeating-linear-gradient(90deg,transparent 0,transparent 39px,rgba(200,160,48,.012) 39px,rgba(200,160,48,.012) 40px);}
+.shoe-wall{
+  background:linear-gradient(to bottom,rgba(253,250,255,.55),rgba(240,228,248,.45));
+  border:1px solid rgba(216,200,240,.28);
+  position:relative;padding:1.2rem 1rem 0;overflow:hidden;
+  border-radius:4px;
+}
+.shoe-wall::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 39px,rgba(216,200,240,.08) 39px,rgba(216,200,240,.08) 40px),repeating-linear-gradient(90deg,transparent 0,transparent 39px,rgba(216,200,240,.06) 39px,rgba(216,200,240,.06) 40px);}
 .shoes-row{display:flex;justify-content:space-around;align-items:flex-end;gap:.4rem;}
 .shoe-item{flex:1;max-width:140px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;transition:transform .3s cubic-bezier(.23,1,.32,1),filter .3s;}
-.shoe-item:hover{transform:translateY(-12px) scale(1.08);filter:drop-shadow(0 18px 26px rgba(0,0,0,.8));z-index:2;}
+.shoe-item:hover{transform:translateY(-12px) scale(1.08);filter:drop-shadow(0 16px 24px rgba(216,160,200,.6));z-index:2;}
 .shoe-item:active{transform:translateY(-4px) scale(.98);}
 .shoe-item svg{width:100%;height:auto;display:block;}
-.shoe-shadow{width:65%;height:7px;background:radial-gradient(ellipse,rgba(0,0,0,.55) 0%,transparent 75%);margin-top:1px;transition:opacity .3s,width .3s;}
-.shoe-item:hover .shoe-shadow{opacity:.25;width:85%;}
+.shoe-shadow{width:65%;height:6px;background:radial-gradient(ellipse,rgba(180,140,180,.45) 0%,transparent 75%);margin-top:1px;transition:opacity .3s,width .3s;}
+.shoe-item:hover .shoe-shadow{opacity:.3;width:85%;}
 .shoe-lbl{text-align:center;padding:.4rem 0 .9rem;}
-.shoe-lbl .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.78rem,1.9vw,.98rem);color:var(--cream);letter-spacing:.06em;line-height:1;}
-.shoe-lbl .iprice{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:.63rem;letter-spacing:.24em;color:var(--gold-hi);margin-top:.14rem;}
-.shoe-shelf-plank{height:15px;background:linear-gradient(to bottom,#4a4018,#363014 55%,#2a2610);box-shadow:0 8px 22px rgba(0,0,0,.65),inset 0 2px 0 rgba(255,255,255,.07);}
-.shoe-shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 24px,rgba(255,255,255,.018) 24px,rgba(255,255,255,.018) 25px);}
+.shoe-lbl .iname{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(.78rem,1.9vw,.98rem);color:var(--ink);letter-spacing:.06em;line-height:1;}
+.shoe-lbl .iprice{font-family:'Nunito',sans-serif;font-weight:300;font-size:.62rem;letter-spacing:.22em;color:var(--blush-deep);margin-top:.14rem;}
+.shoe-shelf-plank{height:13px;background:linear-gradient(to bottom,#d8c8e8,#c0b0d4 55%,#a898c0);box-shadow:0 7px 20px rgba(160,140,180,.4),inset 0 2px 0 rgba(255,255,255,.4);}
+.shoe-shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 24px,rgba(255,255,255,.05) 24px,rgba(255,255,255,.05) 25px);}
 
-/* ═══════════════════════════════════════
-   ZIPPER OVERLAY — position:fixed on top
-   Uncovers the catalog as user scrolls
-═══════════════════════════════════════ */
+/* ═══════════════════════
+   ZIPPER OVERLAY
+═══════════════════════ */
 #zipper {
   position: fixed;
   inset: 0;
   z-index: 50;
-  pointer-events: none; /* set to all via JS during animation phase */
+  pointer-events: none;
   overflow: hidden;
 }
 #zipper.active { pointer-events: all; }
 
-/* Dark backing behind the fabric (hides catalog before unzip) */
 #zipper-bg {
   position: absolute; inset: 0;
-  background: var(--bg);
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
 }
 
-/* Gap glow */
 #gap-light {
   position:absolute; left:50%; transform:translateX(-50%);
-  width:240px; top:0; z-index:3; pointer-events:none;
-  background:radial-gradient(ellipse 55% 100% at 50% 0%,rgba(212,176,60,.13) 0%,transparent 70%);
+  width:220px; top:0; z-index:3; pointer-events:none;
+  background:radial-gradient(ellipse 55% 100% at 50% 0%,rgba(253,250,255,.55) 0%,transparent 70%);
 }
 
 /* Fabric panels */
@@ -178,16 +243,22 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 
 .fab {
   position:absolute; inset:0;
-  background: linear-gradient(165deg, var(--fab-light) 0%, var(--fab-mid) 45%, var(--fab-dark) 100%);
+  background: linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
+}
+/* soft texture dots */
+.fab::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image: radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 #fl-c .fab::after, #fl-o .fab::after {
-  content:''; position:absolute; right:0;top:0;bottom:0; width:70px;
-  background:linear-gradient(to left,rgba(0,0,0,.72),rgba(0,0,0,.2) 55%,transparent);
+  content:''; position:absolute; right:0;top:0;bottom:0; width:60px;
+  background:linear-gradient(to left,rgba(180,80,120,.4),rgba(180,80,120,.1) 55%,transparent);
   pointer-events:none;
 }
 #fr-c .fab::after, #fr-o .fab::after {
-  content:''; position:absolute; left:0;top:0;bottom:0; width:70px;
-  background:linear-gradient(to right,rgba(0,0,0,.72),rgba(0,0,0,.2) 55%,transparent);
+  content:''; position:absolute; left:0;top:0;bottom:0; width:60px;
+  background:linear-gradient(to right,rgba(180,80,120,.4),rgba(180,80,120,.1) 55%,transparent);
   pointer-events:none;
 }
 
@@ -199,17 +270,17 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 #tw-l { left:calc(50% - 16px); }
 #tw-r { left:50%; }
 
-/* Spine / crease */
+/* Spine */
 #spine {
   position:absolute; left:50%; transform:translateX(-50%);
   z-index:12; width:5px;
   background:linear-gradient(to right,var(--chrome-dark),var(--chrome-low),var(--chrome-dark));
-  box-shadow:0 0 4px rgba(0,0,0,.9);
+  box-shadow:0 0 6px rgba(180,80,140,.4);
 }
 #crease {
   position:absolute; left:0;right:0; height:3px; z-index:25; pointer-events:none;
-  background:linear-gradient(to right,transparent,rgba(255,255,255,.05) 18%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.05) 82%,transparent);
-  box-shadow:0 2px 8px rgba(0,0,0,.7);
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.1) 18%,rgba(255,255,255,.45) 50%,rgba(255,255,255,.1) 82%,transparent);
+  box-shadow:0 2px 10px rgba(180,80,140,.3);
 }
 
 /* Pull tab */
@@ -217,82 +288,85 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
   position:absolute; left:50%; transform:translateX(-50%);
   z-index:30; pointer-events:none;
   display:flex; flex-direction:column; align-items:center;
-  filter:drop-shadow(0 5px 14px rgba(0,0,0,.9));
+  filter:drop-shadow(0 5px 14px rgba(180,80,140,.6));
 }
 .slider {
   width:33px; height:20px;
   background:linear-gradient(180deg,var(--chrome-hi),var(--chrome-mid) 48%,var(--chrome-low));
   border-radius:3px; position:relative;
-  box-shadow:0 2px 5px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.4);
+  box-shadow: 0 2px 5px rgba(100,60,100,.4),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(100,60,100,.25);
 }
-.slider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:13px;background:linear-gradient(to bottom,#1a1812,#2e2c26);border-radius:1px;box-shadow:inset 0 1px 2px rgba(0,0,0,.5);}
-.slider::after{content:'';position:absolute;top:2px;left:4px;right:4px;height:3px;background:rgba(255,255,255,.38);border-radius:2px;}
-.neck{width:7px;height:9px;background:linear-gradient(to right,var(--chrome-dark),var(--chrome-mid),var(--chrome-dark));box-shadow:0 2px 4px rgba(0,0,0,.5);}
-.ring{width:26px;height:34px;border:3.5px solid var(--gold);border-radius:5px 5px 9px 9px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.7),0 0 18px rgba(200,160,48,.28);}
-.ring::before{content:'';width:11px;height:18px;border:1.5px solid rgba(200,160,48,.4);border-radius:2px 2px 6px 6px;}
+.slider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:13px;background:linear-gradient(to bottom,var(--chrome-dark),var(--chrome-low));border-radius:1px;box-shadow:inset 0 1px 2px rgba(100,60,100,.4);}
+.slider::after{content:'';position:absolute;top:2px;left:4px;right:4px;height:3px;background:rgba(255,255,255,.55);border-radius:2px;}
+.neck{width:7px;height:9px;background:linear-gradient(to right,var(--chrome-dark),var(--chrome-mid),var(--chrome-dark));box-shadow:0 2px 4px rgba(100,60,100,.35);}
+.ring{width:26px;height:34px;border:3.5px solid var(--blush-deep);border-radius:5px 5px 9px 9px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(180,80,140,.45),0 0 18px rgba(232,160,188,.4);}
+.ring::before{content:'';width:11px;height:18px;border:1.5px solid rgba(232,160,188,.55);border-radius:2px 2px 6px 6px;}
 
 /* Scroll hint */
 #hint {
   position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
   z-index:100; text-align:center; transition:opacity .5s; pointer-events:none;
 }
-#hint span{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,234,216,.35);margin-bottom:.6rem;}
-.arr{width:1px;height:28px;margin:0 auto;background:linear-gradient(to bottom,rgba(200,160,48,.7),transparent);animation:pulse 2.2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:.2;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1.1)}}
+#hint span{display:block;font-family:'Dancing Script',cursive;font-size:1.1rem;letter-spacing:.12em;color:rgba(42,26,46,.45);margin-bottom:.6rem;}
+.arr{width:1px;height:28px;margin:0 auto;background:linear-gradient(to bottom,rgba(232,160,188,.9),transparent);animation:pulse 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.25;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1.1)}}
 
-/* ═══════════════════════════════════════
+/* ═══════════════════════
    MODAL
-═══════════════════════════════════════ */
-#modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(19,14,6,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .35s;}
-#modal-overlay.open{background:rgba(19,14,6,.95);pointer-events:all;}
-#modal{position:relative;width:min(92vw,480px);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:scale(.86) translateY(28px);transition:opacity .38s cubic-bezier(.23,1,.32,1),transform .38s cubic-bezier(.23,1,.32,1);}
+═══════════════════════ */
+#modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(42,26,46,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .35s;}
+#modal-overlay.open{background:rgba(42,26,46,.88);pointer-events:all;}
+#modal{position:relative;width:min(92vw,480px);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;border-radius:6px;opacity:0;transform:scale(.86) translateY(28px);transition:opacity .38s cubic-bezier(.23,1,.32,1),transform .38s cubic-bezier(.23,1,.32,1);box-shadow:0 20px 60px rgba(42,26,46,.55);}
 #modal-overlay.open #modal{opacity:1;transform:scale(1) translateY(0);}
 #modal-visual{width:100%;aspect-ratio:4/3;max-height:50vh;position:relative;flex-shrink:0;overflow:hidden;}
 #modal-visual-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-#modal-visual::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 3px);}
-#modal-visual::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;border:1px solid rgba(200,160,48,.16);box-shadow:inset 0 0 50px rgba(0,0,0,.5);}
-#modal-info{background:#1a1208;border:1px solid rgba(200,160,48,.12);border-top:none;padding:1.3rem 1.5rem 1.5rem;overflow-y:auto;flex-shrink:0;}
-.modal-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.62rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
-.modal-name{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(1.7rem,6vw,2.6rem);color:var(--cream);line-height:1;margin-bottom:.5rem;white-space:pre-line;}
-.modal-desc{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:.92rem;letter-spacing:.04em;color:rgba(245,234,216,.45);line-height:1.7;margin-bottom:1rem;}
+#modal-visual::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(255,255,255,.018) 2px,rgba(255,255,255,.018) 3px);}
+#modal-visual::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;border:1.5px solid rgba(232,160,188,.25);box-shadow:inset 0 0 40px rgba(42,26,46,.3);}
+#modal-info{background:rgba(253,250,255,.97);border:1.5px solid rgba(216,200,240,.4);border-top:none;padding:1.3rem 1.5rem 1.5rem;overflow-y:auto;flex-shrink:0;}
+.modal-eyebrow{font-family:'Nunito',sans-serif;font-size:.6rem;letter-spacing:.44em;text-transform:uppercase;color:var(--blush-deep);margin-bottom:.4rem;}
+.modal-name{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(1.7rem,6vw,2.6rem);color:var(--ink);line-height:1;margin-bottom:.5rem;white-space:pre-line;}
+.modal-desc{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:.92rem;letter-spacing:.04em;color:var(--ink-dim);line-height:1.7;margin-bottom:1rem;}
 .modal-price-row{display:flex;align-items:baseline;gap:.9rem;margin-bottom:1rem;}
-.modal-price{font-family:'Cormorant Garamond',serif;font-size:1.65rem;color:var(--gold-hi);letter-spacing:.04em;}
-.modal-orig{font-family:'Barlow Condensed',sans-serif;font-size:.77rem;letter-spacing:.14em;color:rgba(245,234,216,.2);text-decoration:line-through;}
+.modal-price{font-family:'Cormorant Garamond',serif;font-size:1.65rem;color:var(--blush-deep);letter-spacing:.04em;}
+.modal-orig{font-family:'Nunito',sans-serif;font-size:.77rem;letter-spacing:.14em;color:var(--ink-dim);text-decoration:line-through;}
 .modal-colors{display:flex;gap:.42rem;margin-bottom:1rem;}
-.color-dot{width:17px;height:17px;border-radius:50%;border:1.5px solid rgba(245,234,216,.14);cursor:pointer;transition:border-color .2s,transform .2s;}
-.color-dot.active,.color-dot:hover{border-color:var(--gold);transform:scale(1.22);}
+.color-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(42,26,46,.12);cursor:pointer;transition:border-color .2s,transform .2s;}
+.color-dot.active,.color-dot:hover{border-color:var(--blush-deep);transform:scale(1.22);}
 .size-row{display:flex;gap:.32rem;flex-wrap:wrap;margin-bottom:1rem;}
-.size-chip{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:.17em;padding:.26rem .58rem;border:1px solid rgba(245,234,216,.15);color:rgba(245,234,216,.42);cursor:pointer;transition:border-color .2s,color .2s;}
-.size-chip:hover,.size-chip.active{border-color:var(--gold);color:var(--gold-hi);}
-.modal-cta{display:block;width:100%;padding:.82rem;background:var(--gold);color:var(--bg);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1rem;letter-spacing:.32em;text-align:center;border:none;cursor:pointer;transition:background .2s,letter-spacing .2s;}
-.modal-cta:hover{background:var(--gold-hi);letter-spacing:.48em;}
-#modal-close{position:absolute;top:.8rem;right:.8rem;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(19,14,6,.8);border:1px solid rgba(200,160,48,.24);color:var(--cream);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;backdrop-filter:blur(6px);}
-#modal-close:hover{background:rgba(200,160,48,.18);border-color:var(--gold);}
+.size-chip{font-family:'Nunito',sans-serif;font-size:.67rem;letter-spacing:.14em;padding:.28rem .6rem;border:1.5px solid rgba(42,26,46,.14);color:var(--ink-dim);cursor:pointer;transition:border-color .2s,color .2s,background .2s;border-radius:2px;}
+.size-chip:hover,.size-chip.active{border-color:var(--blush-deep);color:var(--blush-deep);background:rgba(232,160,188,.08);}
+.modal-cta{display:block;width:100%;padding:.85rem;background:var(--blush-deep);color:white;font-family:'Nunito',sans-serif;font-weight:600;font-size:.82rem;letter-spacing:.32em;text-align:center;border:none;cursor:pointer;transition:background .2s,letter-spacing .2s;border-radius:0 0 4px 4px;}
+.modal-cta:hover{background:var(--blush-mid);letter-spacing:.46em;}
+#modal-close{position:absolute;top:.8rem;right:.8rem;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(253,250,255,.85);border:1.5px solid rgba(216,200,240,.5);color:var(--ink);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;backdrop-filter:blur(6px);}
+#modal-close:hover{background:rgba(232,160,188,.25);border-color:var(--blush-deep);}
 
-/* SVG product classes */
-.tb{fill:#1a2535;}.ts{fill:#162030;}.tc{fill:#141c28;}.td{stroke:rgba(255,255,255,.1);stroke-width:.9;fill:none;}.tn{fill:rgba(200,160,48,.55);}
-.eb{fill:#2a1e12;}.es{fill:#201608;}.ep{fill:rgba(220,180,80,.22);}.ep2{fill:rgba(220,180,80,.1);}
-.hb{fill:#1a1614;}.hpk{fill:#141010;stroke:rgba(255,255,255,.07);stroke-width:.7;}.hc{stroke:rgba(200,160,48,.45);stroke-width:1.3;fill:none;}.ht{fill:rgba(200,160,48,.5);}
-.cb{fill:#1a1c10;}.cpk{fill:#141508;stroke:rgba(255,255,255,.09);stroke-width:.7;}.cs{stroke:rgba(255,255,255,.09);stroke-width:.7;fill:none;}
-.sb{fill:#2a1624;}.ss{fill:rgba(200,160,48,.2);}
-.pb{fill:#1c1818;}.pw{fill:#141212;}.ps{stroke:rgba(255,255,255,.09);stroke-width:.7;fill:none;}
-.snso{fill:#f0ece4;}.snu{fill:#1a1a2a;}.sna{fill:rgba(200,160,48,.65);}.snl{stroke:rgba(240,236,224,.55);stroke-width:.75;fill:none;}
-.btb{fill:#1a1410;}.bts{fill:#0e0c08;}.btp{fill:#241c14;stroke:rgba(200,160,48,.28);stroke-width:.7;}.btk{fill:rgba(200,160,48,.65);}
-.hlb{fill:#2a1418;}.hlh{fill:#1a0c10;}.hls{fill:#200e12;stroke:rgba(200,160,48,.3);stroke-width:.7;}.hlj{fill:rgba(200,160,48,.8);}
+/* SVG product classes — pastel-rethemed */
+.tb{fill:#d8eef8;}.ts{fill:#c4e0f0;}.tc{fill:#b8d8ec;}.td{stroke:rgba(42,26,46,.14);stroke-width:.9;fill:none;}.tn{fill:rgba(232,160,188,.7);}
+.eb{fill:#f8dce8;}.es{fill:#f0c8d8;}.ep{fill:rgba(216,180,240,.3);}.ep2{fill:rgba(216,180,240,.15);}
+.hb{fill:#f0d0e4;}.hpk{fill:#e8c4d8;stroke:rgba(42,26,46,.08);stroke-width:.7;}.hc{stroke:rgba(232,160,188,.6);stroke-width:1.3;fill:none;}.ht{fill:rgba(232,160,188,.65);}
+.cb{fill:#d8f0e4;}.cpk{fill:#c4e8d8;stroke:rgba(42,26,46,.09);stroke-width:.7;}.cs{stroke:rgba(42,26,46,.1);stroke-width:.7;fill:none;}
+.sb{fill:#e8d0f0;}.ss{fill:rgba(216,180,240,.35);}
+.pb{fill:#f8ece8;}.pw{fill:#f0e0d8;}.ps{stroke:rgba(42,26,46,.1);stroke-width:.7;fill:none;}
+.snso{fill:#fdfaff;}.snu{fill:#d8eef8;}.sna{fill:rgba(232,160,188,.7);}.snl{stroke:rgba(42,26,46,.22);stroke-width:.75;fill:none;}
+.btb{fill:#f0d8e4;}.bts{fill:#e8c8d8;}.btp{fill:#f8e4ee;stroke:rgba(232,160,188,.35);stroke-width:.7;}.btk{fill:rgba(232,160,188,.75);}
+.hlb{fill:#f0e0f0;}.hlh{fill:#e8d0e8;}.hls{fill:#e8d4ec;stroke:rgba(216,180,240,.4);stroke-width:.7;}.hlj{fill:rgba(232,160,188,.9);}
 
 @media(max-width:550px){
   .hangers-row{padding:0 .3rem;gap:.15rem;} .hanger-item{max-width:100px;}
   .shoes-row{gap:.25rem;} .shoe-item{max-width:105px;}
-  .cat-tab{padding:.9rem .9rem;font-size:.62rem;letter-spacing:.28em;}
+  .cat-tab{padding:.88rem .8rem;font-size:.62rem;letter-spacing:.25em;}
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-  CATALOG — the content being revealed
-  This is what lives "inside" the zipper
-══════════════════════════════════ -->
+<!-- LOGO HEADER -->
+<header id="site-header">
+  <img src="kats-logo.png" alt="Kat's O-Boutique">
+  <span class="header-tagline">Est. 2020 · Zamboanga City</span>
+</header>
+
+<!-- CATALOG -->
 <div id="page">
   <div id="catalog">
 
@@ -307,7 +381,7 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
       <div class="cat-tab" data-cat="shoes">Shoes &amp; Heels</div>
     </div>
 
-    <!-- ─── TOPS: HANGING RACK ─── -->
+    <!-- TOPS: HANGING RACK -->
     <div class="cat-section active" id="sec-tops">
       <div class="rack-scene">
         <div class="rack-rail-wrap"><div class="rack-rail"></div></div>
@@ -315,9 +389,9 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 
           <div class="hanger-item" data-item="0">
             <svg class="hanger-hook" viewBox="0 0 60 36" width="60" height="36">
-              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c4beb4" stroke-width="3.8" fill="none" stroke-linecap="round"/>
-              <line x1="8" y1="17" x2="52" y2="17" stroke="#aaa09a" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="30" cy="17" r="2.8" fill="#c09838"/>
+              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c0b0cc" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+              <line x1="8" y1="17" x2="52" y2="17" stroke="#b0a0bc" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="30" cy="17" r="2.8" fill="#e890b8"/>
             </svg>
             <div class="hanger-garment">
               <svg viewBox="0 0 108 148">
@@ -338,16 +412,16 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 
           <div class="hanger-item" data-item="1">
             <svg class="hanger-hook" viewBox="0 0 60 36" width="60" height="36">
-              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c4beb4" stroke-width="3.8" fill="none" stroke-linecap="round"/>
-              <line x1="8" y1="17" x2="52" y2="17" stroke="#aaa09a" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="30" cy="17" r="2.8" fill="#c09838"/>
+              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c0b0cc" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+              <line x1="8" y1="17" x2="52" y2="17" stroke="#b0a0bc" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="30" cy="17" r="2.8" fill="#e890b8"/>
             </svg>
             <div class="hanger-garment">
               <svg viewBox="0 0 108 142">
                 <path class="es" d="M30 16 L6 52 L26 60 L36 28 Z"/>
                 <path class="es" d="M78 16 L102 52 L82 60 L72 28 Z"/>
                 <path class="eb" d="M30 16 L22 142 L86 142 L78 16 Z"/>
-                <path style="fill:#201608" d="M42 8 Q54 2 66 8 L70 17 Q54 12 38 17 Z"/>
+                <path style="fill:#f0c4d4" d="M42 8 Q54 2 66 8 L70 17 Q54 12 38 17 Z"/>
                 <rect class="ep" x="35" y="50" width="38" height="44" rx="2"/>
                 <rect class="ep2" x="39" y="60" width="28" height="7" rx="1"/>
                 <rect class="ep2" x="39" y="71" width="20" height="6" rx="1"/>
@@ -360,9 +434,9 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
 
           <div class="hanger-item" data-item="2">
             <svg class="hanger-hook" viewBox="0 0 60 36" width="60" height="36">
-              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c4beb4" stroke-width="3.8" fill="none" stroke-linecap="round"/>
-              <line x1="8" y1="17" x2="52" y2="17" stroke="#aaa09a" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="30" cy="17" r="2.8" fill="#c09838"/>
+              <path d="M30 5 Q30 0 35 0 Q44 0 44 9 Q44 15 35 17 L8 17" stroke="#c0b0cc" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+              <line x1="8" y1="17" x2="52" y2="17" stroke="#b0a0bc" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="30" cy="17" r="2.8" fill="#e890b8"/>
             </svg>
             <div class="hanger-garment">
               <svg viewBox="0 0 108 162">
@@ -370,8 +444,8 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
                 <path class="hb" d="M26 28 L5 68 L22 78 L34 42 Z"/>
                 <path class="hb" d="M82 28 L103 68 L86 78 L74 42 Z"/>
                 <path class="hb" d="M37 24 Q32 5 54 3 Q76 5 71 24 L67 30 Q54 25 41 30 Z"/>
-                <line style="stroke:rgba(200,160,48,.3);stroke-width:1.4;fill:none" x1="54" y1="29" x2="54" y2="154"/>
-                <g style="stroke:rgba(200,160,48,.2);stroke-width:.8">
+                <line style="stroke:rgba(232,160,188,.45);stroke-width:1.4;fill:none" x1="54" y1="29" x2="54" y2="154"/>
+                <g style="stroke:rgba(232,160,188,.28);stroke-width:.8">
                   <line x1="51" y1="44" x2="57" y2="44"/><line x1="51" y1="57" x2="57" y2="57"/>
                   <line x1="51" y1="70" x2="57" y2="70"/><line x1="51" y1="83" x2="57" y2="83"/><line x1="51" y1="96" x2="57" y2="96"/>
                 </g>
@@ -387,7 +461,7 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
       </div>
     </div>
 
-    <!-- ─── BOTTOMS ─── -->
+    <!-- BOTTOMS -->
     <div class="cat-section" id="sec-bottoms">
       <div class="shelf-scene">
         <div class="shelf-unit">
@@ -398,18 +472,18 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
             <div class="folded-item" data-item="3">
               <svg viewBox="0 0 120 90">
                 <rect class="cb" x="4" y="8" width="112" height="72" rx="2"/>
-                <rect style="fill:#0e0d08" x="4" y="8" width="112" height="14" rx="2"/>
+                <rect style="fill:#c4e4d4" x="4" y="8" width="112" height="14" rx="2"/>
                 <line class="cs" x1="60" y1="22" x2="60" y2="80"/>
                 <rect class="cpk" x="12" y="36" width="28" height="20" rx="1.5"/>
                 <line class="cs" x1="12" y1="46" x2="40" y2="46"/>
-                <rect style="fill:rgba(200,160,48,.42)" x="20" y="54" width="9" height="2.5" rx="1"/>
+                <rect style="fill:rgba(232,160,188,.5)" x="20" y="54" width="9" height="2.5" rx="1"/>
                 <rect class="cpk" x="80" y="36" width="28" height="20" rx="1.5"/>
                 <line class="cs" x1="80" y1="46" x2="108" y2="46"/>
-                <rect style="fill:rgba(200,160,48,.42)" x="91" y="54" width="9" height="2.5" rx="1"/>
+                <rect style="fill:rgba(232,160,188,.5)" x="91" y="54" width="9" height="2.5" rx="1"/>
                 <line class="cs" x1="4" y1="22" x2="116" y2="22"/>
-                <rect style="fill:rgba(255,255,255,.1)" x="17" y="5" width="5" height="9" rx="1"/>
-                <rect style="fill:rgba(255,255,255,.1)" x="98" y="5" width="5" height="9" rx="1"/>
-                <rect style="fill:rgba(255,255,255,.1)" x="57" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.25)" x="17" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.25)" x="98" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.25)" x="57" y="5" width="5" height="9" rx="1"/>
               </svg>
               <div class="fold-info"><div class="iname">CARGO TROUSERS</div><div class="iprice">₱ 3,290</div></div>
             </div>
@@ -417,13 +491,13 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
             <div class="folded-item" data-item="4">
               <svg viewBox="0 0 120 90">
                 <rect class="sb" x="4" y="8" width="112" height="72" rx="2"/>
-                <rect style="fill:#200e1c" x="4" y="8" width="112" height="13" rx="2"/>
+                <rect style="fill:#dcc8ec" x="4" y="8" width="112" height="13" rx="2"/>
                 <rect class="ss" x="4" y="21" width="10" height="59" rx="0 0 2 2"/>
                 <rect class="ss" x="106" y="21" width="10" height="59" rx="0 0 2 2"/>
-                <line style="stroke:rgba(255,255,255,.07);stroke-width:.7;fill:none" x1="60" y1="21" x2="60" y2="80"/>
-                <line style="stroke:rgba(200,160,48,.38);stroke-width:1.2;fill:none" x1="44" y1="14.5" x2="76" y2="14.5"/>
-                <circle style="fill:rgba(200,160,48,.55)" cx="42" cy="14.5" r="2.8"/>
-                <circle style="fill:rgba(200,160,48,.55)" cx="78" cy="14.5" r="2.8"/>
+                <line style="stroke:rgba(42,26,46,.1);stroke-width:.7;fill:none" x1="60" y1="21" x2="60" y2="80"/>
+                <line style="stroke:rgba(232,160,188,.5);stroke-width:1.2;fill:none" x1="44" y1="14.5" x2="76" y2="14.5"/>
+                <circle style="fill:rgba(232,160,188,.7)" cx="42" cy="14.5" r="2.8"/>
+                <circle style="fill:rgba(232,160,188,.7)" cx="78" cy="14.5" r="2.8"/>
               </svg>
               <div class="fold-info"><div class="iname">TRACK SHORTS</div><div class="iprice">₱ 1,690</div></div>
             </div>
@@ -437,9 +511,9 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
                 <path class="ps" d="M104 24 Q95 27 93 35"/>
                 <line class="ps" x1="38" y1="21" x2="35" y2="80"/>
                 <line class="ps" x1="82" y1="21" x2="85" y2="80"/>
-                <rect style="fill:rgba(255,255,255,.09)" x="17" y="5" width="5" height="9" rx="1"/>
-                <rect style="fill:rgba(255,255,255,.09)" x="98" y="5" width="5" height="9" rx="1"/>
-                <rect style="fill:rgba(255,255,255,.09)" x="57" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.2)" x="17" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.2)" x="98" y="5" width="5" height="9" rx="1"/>
+                <rect style="fill:rgba(255,255,255,.2)" x="57" y="5" width="5" height="9" rx="1"/>
               </svg>
               <div class="fold-info"><div class="iname">SLIM TROUSERS</div><div class="iprice">₱ 2,490</div></div>
             </div>
@@ -450,7 +524,7 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
       </div>
     </div>
 
-    <!-- ─── SHOES ─── -->
+    <!-- SHOES -->
     <div class="cat-section" id="sec-shoes">
       <div class="shoe-scene">
         <div class="shoe-wall">
@@ -460,12 +534,12 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
               <svg viewBox="0 0 185 115">
                 <path class="snso" d="M13 86 Q13 102 42 105 L155 101 Q178 98 178 85 L172 74 L17 72 Z"/>
                 <path class="snu" d="M20 74 Q20 43 42 33 L120 30 Q158 30 168 50 L172 74 Z"/>
-                <path style="fill:#141422" d="M76 30 L80 74 L106 74 L110 30 Z"/>
+                <path style="fill:#c4dff0" d="M76 30 L80 74 L106 74 L110 30 Z"/>
                 <path class="sna" d="M28 61 Q72 43 152 56 Q141 67 38 67 Z"/>
                 <line class="snl" x1="79" y1="41" x2="108" y2="41"/>
                 <line class="snl" x1="78" y1="51" x2="109" y2="51"/>
                 <line class="snl" x1="79" y1="61" x2="108" y2="61"/>
-                <rect style="fill:rgba(200,160,48,.52)" x="13" y="92" width="165" height="7" rx="2"/>
+                <rect style="fill:rgba(232,160,188,.65)" x="13" y="92" width="165" height="7" rx="2"/>
               </svg>
               <div class="shoe-shadow"></div>
               <div class="shoe-lbl"><div class="iname">PLATFORM SNEAKER</div><div class="iprice">₱ 4,890</div></div>
@@ -476,17 +550,17 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
                 <path class="btb" d="M38 8 L34 92 Q34 104 47 108 L96 110 Q104 108 106 98 L102 90 L94 8 Z"/>
                 <path class="btb" d="M34 92 Q32 118 44 124 L98 122 Q112 116 112 104 L106 98 Z"/>
                 <path class="bts" d="M30 116 Q28 134 44 138 L100 136 Q116 132 116 118 L112 104 L98 122 L44 124 Z"/>
-                <g style="fill:rgba(200,160,48,.52)">
+                <g style="fill:rgba(232,160,188,.65)">
                   <circle cx="54" cy="24" r="3"/><circle cx="54" cy="38" r="3"/><circle cx="54" cy="52" r="3"/><circle cx="54" cy="66" r="3"/>
                   <circle cx="82" cy="24" r="3"/><circle cx="82" cy="38" r="3"/><circle cx="82" cy="52" r="3"/><circle cx="82" cy="66" r="3"/>
                 </g>
-                <g style="stroke:rgba(240,236,224,.52);stroke-width:1.1;fill:none">
+                <g style="stroke:rgba(42,26,46,.28);stroke-width:1.1;fill:none">
                   <line x1="54" y1="24" x2="82" y2="24"/><line x1="54" y1="38" x2="82" y2="38"/>
                   <line x1="54" y1="52" x2="82" y2="52"/><line x1="54" y1="66" x2="82" y2="66"/>
                 </g>
                 <rect class="btp" x="34" y="76" width="70" height="11" rx="2"/>
                 <rect class="btk" x="59" y="77" width="13" height="9" rx="1.5"/>
-                <g style="stroke:rgba(0,0,0,.45);stroke-width:1.3;fill:none">
+                <g style="stroke:rgba(42,26,46,.25);stroke-width:1.3;fill:none">
                   <line x1="32" y1="124" x2="116" y2="122"/><line x1="33" y1="130" x2="116" y2="128"/>
                 </g>
               </svg>
@@ -500,11 +574,11 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
                 <path class="hlb" d="M16 100 Q20 66 42 52 L98 49 Q116 51 122 66 L122 100 Z"/>
                 <path class="hls" d="M20 70 Q68 61 126 70 Q130 82 126 86 Q68 77 20 86 Z"/>
                 <path class="hlh" d="M112 124 L110 161 Q114 163 118 161 L120 124 Z"/>
-                <path style="fill:#120810" d="M10 126 Q8 142 26 146 L114 144 Q130 140 130 126 L114 130 L26 132 Z"/>
+                <path style="fill:#ead4ec" d="M10 126 Q8 142 26 146 L114 144 Q130 140 130 126 L114 130 L26 132 Z"/>
                 <path class="hls" d="M30 100 Q70 92 120 100 Q118 112 114 114 Q70 106 34 112 Z"/>
                 <circle class="hlj" cx="72" cy="78" r="5.5"/>
-                <circle style="fill:rgba(200,160,48,.24)" cx="72" cy="78" r="11"/>
-                <g style="stroke:rgba(200,160,48,.5);stroke-width:1;fill:none">
+                <circle style="fill:rgba(232,160,188,.3)" cx="72" cy="78" r="11"/>
+                <g style="stroke:rgba(232,160,188,.6);stroke-width:1;fill:none">
                   <circle cx="52" cy="78" r="4.5"/><circle cx="62" cy="78" r="4.5"/>
                   <circle cx="82" cy="78" r="4.5"/><circle cx="92" cy="78" r="4.5"/>
                 </g>
@@ -522,10 +596,7 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
   </div><!-- /catalog -->
 </div><!-- /page -->
 
-<!-- ══════════════════════════════
-  ZIPPER OVERLAY — fixed on top
-  Uncovers the catalog as you scroll
-══════════════════════════════════ -->
+<!-- ZIPPER OVERLAY -->
 <div id="zipper" class="active">
   <div id="zipper-bg"></div>
   <div id="gap-light"></div>
@@ -547,12 +618,12 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
   </div>
 
   <div id="hint">
-    <span>Scroll to unzip</span>
+    <span>Scroll to unzip ✨</span>
     <div class="arr"></div>
   </div>
 </div>
 
-<!-- ══════════ MODAL ══════════ -->
+<!-- MODAL -->
 <div id="modal-overlay">
   <div id="modal">
     <button id="modal-close">✕</button>
@@ -567,15 +638,13 @@ html, body { width:100%; height:100%; background:var(--bg); font-family:'Cormora
       </div>
       <div class="modal-colors" id="m-colors"></div>
       <div class="size-row"     id="m-sizes"></div>
-      <button class="modal-cta">Add to Bag</button>
+      <button class="modal-cta">Add to Bag 🛍️</button>
     </div>
   </div>
 </div>
 
 <script>
 /* ─────────── CONFIG ─────────── */
-// How many px of scroll = zipper fully open
-// Use 1× viewport height so one full scroll-down opens it
 const SCROLL_RANGE = window.innerHeight;
 
 /* ─────────── BUILD TEETH ─────────── */
@@ -586,7 +655,7 @@ function buildTeeth(wrap,side){
   for(let i=0;i<n;i++){
     const el=document.createElement('div');
     const oy=side==='r'?STEP*.5:0;
-    el.style.cssText=`position:absolute;width:${TW}px;height:9px;top:${i*STEP+oy-STEP}px;${side==='l'?'right:0':'left:0'};border-radius:${side==='l'?'3px 1px 1px 3px':'1px 3px 3px 1px'};background:${side==='l'?'linear-gradient(135deg,#dedad2,#aaa69c,#7a7670,#504c44)':'linear-gradient(45deg,#dedad2,#aaa69c,#7a7670,#504c44)'};box-shadow:0 1px 3px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.28);`;
+    el.style.cssText=`position:absolute;width:${TW}px;height:9px;top:${i*STEP+oy-STEP}px;${side==='l'?'right:0':'left:0'};border-radius:${side==='l'?'3px 1px 1px 3px':'1px 3px 3px 1px'};background:${side==='l'?'linear-gradient(135deg,#fdfaff,#e0c8d8,#c0a0b8,#a08098)':'linear-gradient(45deg,#fdfaff,#e0c8d8,#c0a0b8,#a08098)'};box-shadow:0 1px 3px rgba(100,60,100,.35),inset 0 1px 0 rgba(255,255,255,.55);`;
     frag.appendChild(el);
   }
   wrap.appendChild(frag);
@@ -611,13 +680,11 @@ const hint   = document.getElementById('hint');
 
 /* ─────────── ZIPPER UPDATE ─────────── */
 function update(p){
-  // p = 0 → fully closed   p = 1 → fully open
-
   const H = window.innerHeight;
   const W = window.innerWidth;
-  const tabY    = p * H;
-  const pct     = p * 100;
-  const spread  = p * 28;           // vw
+  const tabY   = p * H;
+  const pct    = p * 100;
+  const spread = p * 28;           // vw — how far panels peel apart
   const spreadPx = spread / 100 * W;
 
   tabEl.style.top  = (tabY - 10) + 'px';
@@ -626,10 +693,11 @@ function update(p){
   spine.style.height = Math.max(0, H - tabY) + 'px';
   glow.style.height = tabY + 'px';
 
-  // Fade out the dark bg as zipper opens (catalog bleeds through)
+  // Fade dark bg as zipper opens
   zipBg.style.opacity = (1 - p).toString();
 
-  // Fabric: closed portion stays, open portion peels
+  // Fabric: closed portion stays; open portion peels away
+  // The key fix for big screens: clip-path uses viewport-relative % of screen height
   flC.style.clipPath = `polygon(0 ${pct}%,100% ${pct}%,100% 100%,0 100%)`;
   flO.style.transform = `translateX(-${spread}vw)`;
   flO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
@@ -638,7 +706,7 @@ function update(p){
   frO.style.transform = `translateX(${spread}vw)`;
   frO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
 
-  // Teeth track fabric edges
+  // Teeth follow fabric edges
   twL.style.transform = `translateX(-${spreadPx}px)`;
   twL.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
   twR.style.transform = `translateX(${spreadPx}px)`;
@@ -646,31 +714,21 @@ function update(p){
 
   hint.style.opacity = p < 0.04 ? '1' : '0';
 
-  // Once fully open: zipper overlay no longer intercepts clicks
   if(p >= 1){
     zipper.classList.remove('active');
-    // Fabric panels fully off screen, hide them entirely
-    zipper.style.pointerEvents = 'none';
+    zipper.style.display = 'none';
   } else {
+    zipper.style.display = '';
     zipper.classList.add('active');
     zipper.style.pointerEvents = 'all';
   }
 }
 
 /* ─────────── SCROLL DRIVER ─────────── */
-/*
-  We need a scroll container. We'll use window scroll.
-  html/body must allow scrolling for this.
-  The page starts with a top spacer div that provides scroll range for the zipper.
-  After that spacer, the catalog is reachable by scrolling normally.
-*/
-
-// Insert spacer at top of page to create scroll range for zipper
 const spacer = document.createElement('div');
 spacer.style.cssText = `height:${SCROLL_RANGE}px;pointer-events:none;`;
 document.getElementById('page').prepend(spacer);
 
-// Allow window scroll
 document.documentElement.style.overflow = 'auto';
 document.body.style.overflow = 'visible';
 
@@ -680,7 +738,7 @@ function onScroll(){
 }
 
 window.addEventListener('scroll', onScroll, {passive:true});
-window.addEventListener('resize', onScroll);
+window.addEventListener('resize', () => { onScroll(); });
 update(0);
 
 /* ─────────── CATALOG TABS ─────────── */
@@ -695,27 +753,27 @@ document.querySelectorAll('.cat-tab').forEach(t => {
 
 /* ─────────── PRODUCT DATA ─────────── */
 const D=[
-  {cat:'Tops · New Arrivals',name:'Linen Overshirt',desc:'Relaxed linen overshirt with dual chest pockets, clean button placket, and raw-edge seam detailing. Perfect for effortless layering.',price:'₱ 2,890',orig:'₱ 3,500',colors:['#1a2535','#2a1a18','#1a2218'],sizes:['XS','S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#111a26,#0a1018)'},
-  {cat:'Tops · New Arrivals',name:'Graphic Print Tee',desc:'Heavyweight 240gsm cotton with bold front graphic. Dropped shoulders, relaxed silhouette, raw hem finish.',price:'₱ 1,290',orig:'',colors:['#2a1e12','#181a1a','#101828'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#201408,#100c06)'},
-  {cat:'Tops · New Arrivals',name:'Zip Hoodie',desc:"Full-zip hoodie in brushed fleece with a structured hood, ribbed cuffs, and kangaroo pocket. Gold zip hardware — a Kat's signature detail.",price:'₱ 3,490',orig:'',colors:['#161a1a','#1a1010','#10101a'],sizes:['S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#121a18,#090f0d)'},
-  {cat:'Bottoms · New Arrivals',name:'Cargo Trousers',desc:'Six-pocket utility trousers with snap-flap cargo pockets and adjustable ankle cuffs.',price:'₱ 3,290',orig:'₱ 3,990',colors:['#1a1c10','#1a1410','#141414'],sizes:['XS','S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#141208,#0c0b06)'},
-  {cat:'Bottoms · New Arrivals',name:'Track Shorts',desc:'Lightweight shorts with contrast stripe, elastic waistband, and back zip pocket.',price:'₱ 1,690',orig:'',colors:['#2a1624','#141010','#101a14'],sizes:['S','M','L','XL'],bg:'linear-gradient(145deg,#200e1c,#150810)'},
-  {cat:'Bottoms · New Arrivals',name:'Slim Trousers',desc:'Tailored slim trousers with mid-rise waist, front crease, and concealed side pockets.',price:'₱ 2,490',orig:'',colors:['#181414','#181818','#141828'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#181414,#0f0c0c)'},
-  {cat:'Shoes · New Arrivals',name:'Platform Sneaker',desc:"Chunky platform runner with stacked EVA midsole and technical upper. Gold sole stripe — unmistakably Kat's.",price:'₱ 4,890',orig:'₱ 5,990',colors:['#1a1a2a','#e8e0d0','#1a1010'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#12101e,#0a0812)'},
-  {cat:'Shoes · New Arrivals',name:'Combat Boot',desc:'Leather-look combat boot with buckle strap, lace-up front, and lug sole.',price:'₱ 5,290',orig:'',colors:['#1a1410','#282828','#1a1010'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#120e0a,#0a0806)'},
-  {cat:'Shoes · New Arrivals',name:'Chain Stiletto',desc:'Pointed-toe stiletto with delicate ankle strap and gold chain embellishment.',price:'₱ 3,890',orig:'',colors:['#200c14','#1a1414','#1c1820'],sizes:['35','36','37','38','39','40','41'],bg:'linear-gradient(145deg,#200c14,#140810)'},
+  {cat:'Tops · New Arrivals',name:'Linen Overshirt',desc:'Relaxed linen overshirt with dual chest pockets, clean button placket, and raw-edge seam detailing. Perfect for effortless layering.',price:'₱ 2,890',orig:'₱ 3,500',colors:['#b8dff0','#f5c8d8','#d8c8f0'],sizes:['XS','S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#d0eaf8,#e8f4fc)'},
+  {cat:'Tops · New Arrivals',name:'Graphic Print Tee',desc:'Heavyweight 240gsm cotton with bold front graphic. Dropped shoulders, relaxed silhouette, raw hem finish.',price:'₱ 1,290',orig:'',colors:['#f5c8d8','#d8c8f0','#b8e8d4'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#f8dce8,#fce8f0)'},
+  {cat:'Tops · New Arrivals',name:'Zip Hoodie',desc:"Full-zip hoodie in brushed fleece with a structured hood, ribbed cuffs, and kangaroo pocket. Blush zip hardware — a Kat's signature detail.",price:'₱ 3,490',orig:'',colors:['#f0d8e4','#d8c8f0','#b8dff0'],sizes:['S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#ecdaf0,#f4eaf8)'},
+  {cat:'Bottoms · New Arrivals',name:'Cargo Trousers',desc:'Six-pocket utility trousers with snap-flap cargo pockets and adjustable ankle cuffs.',price:'₱ 3,290',orig:'₱ 3,990',colors:['#b8e8d4','#d8c8f0','#f5c8d8'],sizes:['XS','S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#c8ece0,#daf4ec)'},
+  {cat:'Bottoms · New Arrivals',name:'Track Shorts',desc:'Lightweight shorts with contrast stripe, elastic waistband, and back zip pocket.',price:'₱ 1,690',orig:'',colors:['#d8c8f0','#f5c8d8','#b8dff0'],sizes:['S','M','L','XL'],bg:'linear-gradient(145deg,#e4d8f8,#ede8fc)'},
+  {cat:'Bottoms · New Arrivals',name:'Slim Trousers',desc:'Tailored slim trousers with mid-rise waist, front crease, and concealed side pockets.',price:'₱ 2,490',orig:'',colors:['#f8ece8','#f5c8d8','#d8c8f0'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#fce8e4,#fef4f0)'},
+  {cat:'Shoes · New Arrivals',name:'Platform Sneaker',desc:"Chunky platform runner with stacked EVA midsole and technical upper. Blush sole stripe — unmistakably Kat's.",price:'₱ 4,890',orig:'₱ 5,990',colors:['#fdfaff','#f5c8d8','#b8dff0'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#e8f4fc,#f0f8fe)'},
+  {cat:'Shoes · New Arrivals',name:'Combat Boot',desc:'Leather-look combat boot with buckle strap, lace-up front, and lug sole.',price:'₱ 5,290',orig:'',colors:['#f0d8e4','#d8c8f0','#f5c8d8'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#f4e0ec,#fceaf4)'},
+  {cat:'Shoes · New Arrivals',name:'Chain Stiletto',desc:'Pointed-toe stiletto with delicate ankle strap and gold chain embellishment.',price:'₱ 3,890',orig:'',colors:['#e8d0f0','#f5c8d8','#d8c8f0'],sizes:['35','36','37','38','39','40','41'],bg:'linear-gradient(145deg,#ead8f4,#f4ecfc)'},
 ];
 
 const MS=[
-  `<svg viewBox="0 0 120 168" width="52%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="ts" d="M28 22 L4 68 L22 77 L34 36 Z"/><path class="ts" d="M92 22 L116 68 L98 77 L86 36 Z"/><path class="tb" d="M28 22 L18 168 L102 168 L92 22 Z"/><path class="tc" d="M46 12 Q60 7 74 12 L78 24 Q60 18 42 24 Z"/><line class="td" x1="60" y1="23" x2="60" y2="160"/><circle class="tn" cx="60" cy="43" r="3.5"/><circle class="tn" cx="60" cy="61" r="3.5"/><circle class="tn" cx="60" cy="79" r="3.5"/><circle class="tn" cx="60" cy="97" r="3.5"/><rect class="td" x="38" y="40" width="17" height="17" rx="1.5"/><line class="td" x1="28" y1="22" x2="92" y2="22"/></svg>`,
-  `<svg viewBox="0 0 118 156" width="56%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="es" d="M30 17 L5 57 L25 66 L37 31 Z"/><path class="es" d="M88 17 L113 57 L93 66 L81 31 Z"/><path class="eb" d="M30 17 L22 156 L96 156 L88 17 Z"/><path style="fill:#201608" d="M44 8 Q59 2 74 8 L78 19 Q59 13 40 19 Z"/><rect class="ep" x="37" y="56" width="44" height="54" rx="3"/><rect class="ep2" x="42" y="67" width="34" height="9" rx="2"/><rect class="ep2" x="42" y="80" width="25" height="7" rx="2"/><rect class="ep2" x="42" y="92" width="30" height="7" rx="2"/></svg>`,
-  `<svg viewBox="0 0 118 178" width="56%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="hb" d="M26 30 L16 178 L102 178 L92 30 Z"/><path class="hb" d="M26 30 L4 74 L22 84 L36 46 Z"/><path class="hb" d="M92 30 L114 74 L96 84 L82 46 Z"/><path class="hb" d="M40 26 Q33 5 59 3 Q85 5 78 26 L74 32 Q59 27 44 32 Z"/><line style="stroke:rgba(200,160,48,.34);stroke-width:1.6;fill:none" x1="59" y1="31" x2="59" y2="170"/><g style="stroke:rgba(200,160,48,.22);stroke-width:.9"><line x1="56" y1="48" x2="62" y2="48"/><line x1="56" y1="63" x2="62" y2="63"/><line x1="56" y1="78" x2="62" y2="78"/><line x1="56" y1="93" x2="62" y2="93"/><line x1="56" y1="108" x2="62" y2="108"/></g><path class="hpk" d="M35 126 L35 160 Q59 165 83 160 L83 126 Q59 131 35 126 Z"/><path class="hc" d="M50 32 Q45 42 42 98"/><path class="hc" d="M68 32 Q73 42 76 98"/><circle class="ht" cx="42" cy="100" r="3.5"/><circle class="ht" cx="76" cy="100" r="3.5"/></svg>`,
-  `<svg viewBox="0 0 118 210" width="50%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><rect style="fill:#0e0d08" x="8" y="10" width="102" height="18" rx="2"/><path class="cb" d="M10 28 L4 210 L60 210 L62 28 Z"/><path class="cb" d="M62 28 L60 210 L114 210 L108 28 Z"/><rect class="cpk" x="12" y="74" width="36" height="48" rx="2"/><line class="cs" x1="12" y1="98" x2="48" y2="98"/><rect style="fill:rgba(200,160,48,.44)" x="22" y="118" width="12" height="3.5" rx="1"/><rect class="cpk" x="70" y="74" width="36" height="48" rx="2"/><line class="cs" x1="70" y1="98" x2="106" y2="98"/><rect style="fill:rgba(200,160,48,.44)" x="80" y="118" width="12" height="3.5" rx="1"/><line class="cs" x1="60" y1="28" x2="60" y2="210"/></svg>`,
-  `<svg viewBox="0 0 126 150" width="58%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><rect style="fill:#200e1c" x="7" y="10" width="112" height="18" rx="2"/><path class="sb" d="M9 28 L13 150 L65 150 L63 28 Z"/><path class="sb" d="M63 28 L61 150 L113 150 L117 28 Z"/><rect class="ss" x="9" y="28" width="12" height="122"/><rect class="ss" x="105" y="28" width="12" height="122"/><line style="stroke:rgba(200,160,48,.4);stroke-width:1.4;fill:none" x1="49" y1="19" x2="77" y2="19"/><circle style="fill:rgba(200,160,48,.58)" cx="47" cy="19" r="3.5"/><circle style="fill:rgba(200,160,48,.58)" cx="79" cy="19" r="3.5"/></svg>`,
-  `<svg viewBox="0 0 108 218" width="46%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><rect class="pw" x="6" y="10" width="96" height="16" rx="2"/><path class="pb" d="M8 26 L2 218 L55 218 L57 26 Z"/><path class="pb" d="M57 26 L55 218 L106 218 L100 26 Z"/><line class="ps" x1="55" y1="26" x2="55" y2="218"/><line class="ps" x1="30" y1="26" x2="26" y2="218"/><line class="ps" x1="80" y1="26" x2="84" y2="218"/></svg>`,
-  `<svg viewBox="0 0 200 128" width="84%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="snso" d="M11 96 Q11 114 42 117 L160 113 Q184 110 184 96 L178 84 L15 82 Z"/><path class="snu" d="M18 84 Q18 50 42 38 L124 35 Q162 35 173 57 L178 84 Z"/><path style="fill:#141422" d="M78 35 L82 84 L108 84 L112 35 Z"/><path class="sna" d="M28 70 Q76 50 156 64 Q144 76 38 76 Z"/><line class="snl" x1="81" y1="47" x2="110" y2="47"/><line class="snl" x1="80" y1="58" x2="111" y2="58"/><line class="snl" x1="81" y1="69" x2="110" y2="69"/><rect style="fill:rgba(200,160,48,.54)" x="11" y="103" width="173" height="8" rx="2.5"/></svg>`,
-  `<svg viewBox="0 0 145 188" width="64%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="btb" d="M42 8 L38 98 Q38 110 52 114 L104 116 Q113 114 115 102 L111 94 L102 8 Z"/><path class="btb" d="M38 98 Q36 124 48 130 L106 128 Q120 122 120 110 L115 102 Z"/><path class="bts" d="M34 122 Q32 140 48 144 L108 142 Q124 138 124 124 L120 110 L106 128 L48 130 Z"/><g style="fill:rgba(200,160,48,.54)"><circle cx="60" cy="26" r="3.5"/><circle cx="60" cy="42" r="3.5"/><circle cx="60" cy="58" r="3.5"/><circle cx="60" cy="74" r="3.5"/><circle cx="88" cy="26" r="3.5"/><circle cx="88" cy="42" r="3.5"/><circle cx="88" cy="58" r="3.5"/><circle cx="88" cy="74" r="3.5"/></g><g style="stroke:rgba(240,236,224,.54);stroke-width:1.3;fill:none"><line x1="60" y1="26" x2="88" y2="26"/><line x1="60" y1="42" x2="88" y2="42"/><line x1="60" y1="58" x2="88" y2="58"/><line x1="60" y1="74" x2="88" y2="74"/></g><rect class="btp" x="38" y="84" width="77" height="13" rx="2"/><rect class="btk" x="66" y="85" width="14" height="11" rx="1.5"/></svg>`,
-  `<svg viewBox="0 0 160 165" width="74%" style="filter:drop-shadow(0 14px 30px rgba(0,0,0,.8))"><path class="hlb" d="M13 106 Q11 130 27 134 L116 132 Q132 128 132 114 L124 102 Z"/><path class="hlb" d="M17 102 Q21 68 44 54 L102 51 Q120 53 124 70 L124 102 Z"/><path class="hls" d="M21 72 Q72 63 130 72 Q134 84 130 88 Q72 79 21 88 Z"/><path class="hlh" d="M114 126 L112 164 Q116 166 120 164 L122 126 Z"/><path style="fill:#120810" d="M11 128 Q9 144 27 148 L116 146 Q132 142 132 128 L116 132 L27 134 Z"/><path class="hls" d="M32 102 Q72 94 124 102 Q122 114 118 116 Q72 108 36 114 Z"/><circle class="hlj" cx="74" cy="80" r="6"/><circle style="fill:rgba(200,160,48,.24)" cx="74" cy="80" r="12"/><g style="stroke:rgba(200,160,48,.52);stroke-width:1.1;fill:none"><circle cx="53" cy="80" r="5"/><circle cx="64" cy="80" r="5"/><circle cx="84" cy="80" r="5"/><circle cx="95" cy="80" r="5"/></g></svg>`,
+  `<svg viewBox="0 0 120 168" width="52%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="ts" d="M28 22 L4 68 L22 77 L34 36 Z"/><path class="ts" d="M92 22 L116 68 L98 77 L86 36 Z"/><path class="tb" d="M28 22 L18 168 L102 168 L92 22 Z"/><path class="tc" d="M46 12 Q60 7 74 12 L78 24 Q60 18 42 24 Z"/><line class="td" x1="60" y1="23" x2="60" y2="160"/><circle class="tn" cx="60" cy="43" r="3.5"/><circle class="tn" cx="60" cy="61" r="3.5"/><circle class="tn" cx="60" cy="79" r="3.5"/><circle class="tn" cx="60" cy="97" r="3.5"/><rect class="td" x="38" y="40" width="17" height="17" rx="1.5"/><line class="td" x1="28" y1="22" x2="92" y2="22"/></svg>`,
+  `<svg viewBox="0 0 118 156" width="56%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="es" d="M30 17 L5 57 L25 66 L37 31 Z"/><path class="es" d="M88 17 L113 57 L93 66 L81 31 Z"/><path class="eb" d="M30 17 L22 156 L96 156 L88 17 Z"/><path style="fill:#f0c4d4" d="M44 8 Q59 2 74 8 L78 19 Q59 13 40 19 Z"/><rect class="ep" x="37" y="56" width="44" height="54" rx="3"/><rect class="ep2" x="42" y="67" width="34" height="9" rx="2"/><rect class="ep2" x="42" y="80" width="25" height="7" rx="2"/><rect class="ep2" x="42" y="92" width="30" height="7" rx="2"/></svg>`,
+  `<svg viewBox="0 0 118 178" width="56%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="hb" d="M26 30 L16 178 L102 178 L92 30 Z"/><path class="hb" d="M26 30 L4 74 L22 84 L36 46 Z"/><path class="hb" d="M92 30 L114 74 L96 84 L82 46 Z"/><path class="hb" d="M40 26 Q33 5 59 3 Q85 5 78 26 L74 32 Q59 27 44 32 Z"/><line style="stroke:rgba(232,160,188,.5);stroke-width:1.6;fill:none" x1="59" y1="31" x2="59" y2="170"/><g style="stroke:rgba(232,160,188,.3);stroke-width:.9"><line x1="56" y1="48" x2="62" y2="48"/><line x1="56" y1="63" x2="62" y2="63"/><line x1="56" y1="78" x2="62" y2="78"/><line x1="56" y1="93" x2="62" y2="93"/><line x1="56" y1="108" x2="62" y2="108"/></g><path class="hpk" d="M35 126 L35 160 Q59 165 83 160 L83 126 Q59 131 35 126 Z"/><path class="hc" d="M50 32 Q45 42 42 98"/><path class="hc" d="M68 32 Q73 42 76 98"/><circle class="ht" cx="42" cy="100" r="3.5"/><circle class="ht" cx="76" cy="100" r="3.5"/></svg>`,
+  `<svg viewBox="0 0 118 210" width="50%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><rect style="fill:#c4e4d4" x="8" y="10" width="102" height="18" rx="2"/><path class="cb" d="M10 28 L4 210 L60 210 L62 28 Z"/><path class="cb" d="M62 28 L60 210 L114 210 L108 28 Z"/><rect class="cpk" x="12" y="74" width="36" height="48" rx="2"/><line class="cs" x1="12" y1="98" x2="48" y2="98"/><rect style="fill:rgba(232,160,188,.55)" x="22" y="118" width="12" height="3.5" rx="1"/><rect class="cpk" x="70" y="74" width="36" height="48" rx="2"/><line class="cs" x1="70" y1="98" x2="106" y2="98"/><rect style="fill:rgba(232,160,188,.55)" x="80" y="118" width="12" height="3.5" rx="1"/><line class="cs" x1="60" y1="28" x2="60" y2="210"/></svg>`,
+  `<svg viewBox="0 0 126 150" width="58%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><rect style="fill:#dcc8ec" x="7" y="10" width="112" height="18" rx="2"/><path class="sb" d="M9 28 L13 150 L65 150 L63 28 Z"/><path class="sb" d="M63 28 L61 150 L113 150 L117 28 Z"/><rect class="ss" x="9" y="28" width="12" height="122"/><rect class="ss" x="105" y="28" width="12" height="122"/><line style="stroke:rgba(232,160,188,.5);stroke-width:1.4;fill:none" x1="49" y1="19" x2="77" y2="19"/><circle style="fill:rgba(232,160,188,.7)" cx="47" cy="19" r="3.5"/><circle style="fill:rgba(232,160,188,.7)" cx="79" cy="19" r="3.5"/></svg>`,
+  `<svg viewBox="0 0 108 218" width="46%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><rect class="pw" x="6" y="10" width="96" height="16" rx="2"/><path class="pb" d="M8 26 L2 218 L55 218 L57 26 Z"/><path class="pb" d="M57 26 L55 218 L106 218 L100 26 Z"/><line class="ps" x1="55" y1="26" x2="55" y2="218"/><line class="ps" x1="30" y1="26" x2="26" y2="218"/><line class="ps" x1="80" y1="26" x2="84" y2="218"/></svg>`,
+  `<svg viewBox="0 0 200 128" width="84%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="snso" d="M11 96 Q11 114 42 117 L160 113 Q184 110 184 96 L178 84 L15 82 Z"/><path class="snu" d="M18 84 Q18 50 42 38 L124 35 Q162 35 173 57 L178 84 Z"/><path style="fill:#c4dff0" d="M78 35 L82 84 L108 84 L112 35 Z"/><path class="sna" d="M28 70 Q76 50 156 64 Q144 76 38 76 Z"/><line class="snl" x1="81" y1="47" x2="110" y2="47"/><line class="snl" x1="80" y1="58" x2="111" y2="58"/><line class="snl" x1="81" y1="69" x2="110" y2="69"/><rect style="fill:rgba(232,160,188,.65)" x="11" y="103" width="173" height="8" rx="2.5"/></svg>`,
+  `<svg viewBox="0 0 145 188" width="64%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="btb" d="M42 8 L38 98 Q38 110 52 114 L104 116 Q113 114 115 102 L111 94 L102 8 Z"/><path class="btb" d="M38 98 Q36 124 48 130 L106 128 Q120 122 120 110 L115 102 Z"/><path class="bts" d="M34 122 Q32 140 48 144 L108 142 Q124 138 124 124 L120 110 L106 128 L48 130 Z"/><g style="fill:rgba(232,160,188,.65)"><circle cx="60" cy="26" r="3.5"/><circle cx="60" cy="42" r="3.5"/><circle cx="60" cy="58" r="3.5"/><circle cx="60" cy="74" r="3.5"/><circle cx="88" cy="26" r="3.5"/><circle cx="88" cy="42" r="3.5"/><circle cx="88" cy="58" r="3.5"/><circle cx="88" cy="74" r="3.5"/></g><g style="stroke:rgba(42,26,46,.28);stroke-width:1.3;fill:none"><line x1="60" y1="26" x2="88" y2="26"/><line x1="60" y1="42" x2="88" y2="42"/><line x1="60" y1="58" x2="88" y2="58"/><line x1="60" y1="74" x2="88" y2="74"/></g><rect class="btp" x="38" y="84" width="77" height="13" rx="2"/><rect class="btk" x="66" y="85" width="14" height="11" rx="1.5"/></svg>`,
+  `<svg viewBox="0 0 160 165" width="74%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="hlb" d="M13 106 Q11 130 27 134 L116 132 Q132 128 132 114 L124 102 Z"/><path class="hlb" d="M17 102 Q21 68 44 54 L102 51 Q120 53 124 70 L124 102 Z"/><path class="hls" d="M21 72 Q72 63 130 72 Q134 84 130 88 Q72 79 21 88 Z"/><path class="hlh" d="M114 126 L112 164 Q116 166 120 164 L122 126 Z"/><path style="fill:#ead4ec" d="M11 128 Q9 144 27 148 L116 146 Q132 142 132 128 L116 132 L27 134 Z"/><path class="hls" d="M32 102 Q72 94 124 102 Q122 114 118 116 Q72 108 36 114 Z"/><circle class="hlj" cx="74" cy="80" r="6"/><circle style="fill:rgba(232,160,188,.28)" cx="74" cy="80" r="12"/><g style="stroke:rgba(232,160,188,.6);stroke-width:1.1;fill:none"><circle cx="53" cy="80" r="5"/><circle cx="64" cy="80" r="5"/><circle cx="84" cy="80" r="5"/><circle cx="95" cy="80" r="5"/></g></svg>`,
 ];
 
 /* ─────────── MODAL ─────────── */
