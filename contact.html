@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Kat's O-Boutique</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --gold:       #c09838;
+  --gold-hi:    #e8c050;
+  --gold-soft:  #d4b060;
+  --bg:         #130e06;
+  --bg2:        #1c1508;
+  --bg3:        #211908;
+  --surface:    #1a1208;
+  --border:     rgba(200,160,48,.12);
+  --cream:      #f5ead8;
+  --cream-dim:  rgba(245,234,216,.4);
+  --cream-faint:rgba(245,234,216,.16);
+  --fab-dark:   #4e4412;
+  --fab-mid:    #645a18;
+  --fab-light:  #7a6e22;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', serif;
+  min-height: 100%;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(to bottom, rgba(19,14,6,.96), rgba(19,14,6,.0));
+  backdrop-filter: blur(4px);
+}
+.nav-logo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--cream);
+  text-decoration: none;
+  text-shadow: 0 0 20px rgba(200,160,48,.25);
+}
+.nav-links {
+  display: flex; gap: 2rem; list-style: none;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--cream-dim); text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold-hi); }
+
+/* ─── HERO STRIP ─── */
+.hero {
+  min-height: 38vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding: 0 1.5rem 3rem;
+  text-align: center;
+  background: linear-gradient(to bottom, var(--fab-dark) 0%, var(--bg2) 55%, var(--bg) 100%);
+  position: relative; overflow: hidden;
+}
+/* Subtle vignette on the hero */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(19,14,6,.55) 0%, transparent 50%, rgba(19,14,6,.3) 100%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--gold-soft); margin-bottom: 1rem; display: block;
+}
+.hero h1 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: 1;
+  color: var(--cream);
+  text-shadow: 0 0 50px rgba(200,160,48,.28), 0 2px 10px rgba(0,0,0,.7);
+}
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: clamp(.85rem, 1.8vw, 1.1rem);
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cream-dim); margin-top: 1rem;
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold) 30%, var(--gold-hi) 50%, var(--gold) 70%, transparent);
+  opacity: .3;
+  margin: 0;
+}
+
+/* ─── MAIN LAYOUT ─── */
+main {
+  max-width: 900px; margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+@media(max-width:640px){ main { grid-template-columns:1fr; gap:3rem; padding:4rem 1.2rem 5rem; } }
+
+/* ─── INFO COLUMN ─── */
+.info-col h2 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700; font-size: 2rem;
+  color: var(--cream); margin-bottom: 1rem;
+}
+.info-col p {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300; font-style: italic;
+  font-size: 1.05rem; line-height: 1.8;
+  color: var(--cream-dim); margin-bottom: 2rem;
+}
+
+.contact-block { margin-bottom: 1.8rem; }
+.contact-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .4rem; display: block;
+}
+.contact-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; color: var(--cream);
+  letter-spacing: .04em;
+}
+.contact-value a {
+  color: var(--cream); text-decoration: none;
+  transition: color .2s;
+}
+.contact-value a:hover { color: var(--gold-hi); }
+
+.hours-grid {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: .3rem 1.2rem; margin-top: .5rem;
+}
+.hours-day {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.hours-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .92rem; color: var(--cream);
+}
+
+/* Social icons row */
+.socials { display: flex; gap: .9rem; margin-top: 1rem; }
+.social-btn {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cream-dim); text-decoration: none;
+  font-size: .85rem; border-radius: 50%;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.social-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold-hi);
+  background: rgba(200,160,48,.08);
+}
+
+/* ─── FORM COLUMN ─── */
+.form-col h2 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700; font-size: 2rem;
+  color: var(--cream); margin-bottom: 1.8rem;
+}
+
+.field { margin-bottom: 1.2rem; }
+.field label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem; letter-spacing: .45em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .4rem;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .98rem;
+  letter-spacing: .04em;
+  padding: .75rem 1rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--cream-faint);
+  font-style: italic;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(200,160,48,.08);
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M0 0 L6 7 L12 0' fill='none' stroke='%23c09838' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+.field select option { background: var(--bg2); color: var(--cream); }
+.field textarea { resize: vertical; min-height: 120px; }
+
+/* Inline two-col fields */
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+@media(max-width:420px){ .field-row { grid-template-columns:1fr; } }
+
+.submit-btn {
+  display: block; width: 100%;
+  padding: .9rem 1rem;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1rem; letter-spacing: .35em;
+  text-align: center; border: none;
+  cursor: pointer;
+  transition: background .2s, letter-spacing .22s;
+  margin-top: .5rem;
+}
+.submit-btn:hover { background: var(--gold-hi); letter-spacing: .48em; }
+
+/* Success toast */
+#toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--surface); border: 1px solid var(--gold);
+  color: var(--cream); padding: .8rem 2rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .78rem; letter-spacing: .3em; text-transform: uppercase;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s, transform .4s;
+  white-space: nowrap; z-index: 200;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700; font-size: 1.4rem;
+  color: var(--gold-soft);
+  display: block; margin-bottom: .6rem;
+}
+.footer-copy {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .62rem; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--cream-faint);
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a class="nav-logo" href="index.html">Kat's O-Boutique</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Shop</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">We'd love to hear from you</span>
+    <h1>Get in Touch</h1>
+    <p class="hero-sub">Questions, orders, or just a hello</p>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ── Main Content ── -->
+<main>
+
+  <!-- Info Column -->
+  <div class="info-col">
+    <h2>Say Hello</h2>
+    <p>Whether you have a question about sizing, a custom order request, or just want to talk fashion — we're always happy to chat.</p>
+
+    <div class="contact-block">
+      <span class="contact-label">Email</span>
+      <div class="contact-value">
+        <a href="mailto:hello@katsoboutique.com">hello@katsoboutique.com</a>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <span class="contact-label">Phone / Viber</span>
+      <div class="contact-value">
+        <a href="tel:+639XXXXXXXXX">+63 9XX XXX XXXX</a>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <span class="contact-label">Location</span>
+      <div class="contact-value">Zamboanga City, Philippines</div>
+    </div>
+
+    <div class="contact-block">
+      <span class="contact-label">Store Hours</span>
+      <div class="hours-grid">
+        <span class="hours-day">Mon – Fri</span>
+        <span class="hours-time">10:00 AM – 7:00 PM</span>
+        <span class="hours-day">Saturday</span>
+        <span class="hours-time">10:00 AM – 6:00 PM</span>
+        <span class="hours-day">Sunday</span>
+        <span class="hours-time">Closed</span>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <span class="contact-label">Follow Us</span>
+      <div class="socials">
+        <!-- Facebook -->
+        <a class="social-btn" href="#" aria-label="Facebook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a class="social-btn" href="#" aria-label="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <!-- TikTok -->
+        <a class="social-btn" href="#" aria-label="TikTok">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.53V6.79a4.85 4.85 0 01-1.02-.1z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Column -->
+  <div class="form-col">
+    <h2>Send a Message</h2>
+    <form id="contact-form" action="https://formspree.io/f/maqdqdqw" method="POST">
+
+      <div class="field-row">
+        <div class="field">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="first_name" placeholder="e.g. Maria" required>
+        </div>
+        <div class="field">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="last_name" placeholder="e.g. Santos">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="field">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject">
+          <option value="" disabled selected>Select a topic</option>
+          <option>Order Inquiry</option>
+          <option>Sizing Help</option>
+          <option>Custom Order</option>
+          <option>Returns &amp; Exchanges</option>
+          <option>Collaboration</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us how we can help…" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+  </div>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <span class="footer-logo">Kat's O-Boutique</span>
+  <p class="footer-copy">© 2025 Kat's O-Boutique · Zamboanga City, Philippines</p>
+</footer>
+
+<!-- Toast notification -->
+<div id="toast">Message sent — we'll be in touch soon!</div>
+
+<script>
+const form  = document.getElementById('contact-form');
+const toast = document.getElementById('toast');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = form.querySelector('.submit-btn');
+  btn.textContent = 'Sending…';
+  btn.style.opacity = '.7';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    });
+    if (res.ok) {
+      form.reset();
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+  } catch(_) {}
+
+  btn.textContent = 'Send Message';
+  btn.style.opacity = '1';
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>
