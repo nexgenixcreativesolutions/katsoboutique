@@ -4,116 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kat's O-Boutique — New Arrivals</title>
-<link rel="icon" type="image/png" href="kats-logo.png">
+<link rel="icon" type="image/png" href="kats-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  /* Kat's logo palette */
-  --sky:        #b8dff0;
-  --sky-light:  #d6eef9;
-  --blush:      #f5c8d8;
-  --blush-deep: #e8a0bc;
-  --blush-mid:  #f0b4cb;
-  --lavender:   #d8c8f0;
-  --lav-soft:   #e8e0f8;
-  --mint:       #b8e8d4;
-  --butter:     #f8e8b0;
-  --butter-deep:#f0d080;
-  --peach:      #f8c8a8;
-  --white:      #fdfaff;
-  --white-dim:  rgba(253,250,255,.65);
-  --white-faint:rgba(253,250,255,.32);
-
-  /* text */
-  --ink:        #2a1a2e;
-  --ink-soft:   #5a3a5e;
-  --ink-dim:    rgba(42,26,46,.45);
-
-  /* fabric for zipper */
-  --fab-a:      #f0b4cb;
-  --fab-b:      #e89ab8;
-  --fab-c:      #d47a9e;
-
-  /* bg gradient matching logo */
-  --bg-top:     #b8dff0;
-  --bg-mid:     #f0d0e0;
-  --bg-bot:     #e8d8f8;
-
-  /* chrome */
-  --chrome-hi:  #fdfaff;
-  --chrome-mid: #d8d0e0;
-  --chrome-low: #a899b4;
-  --chrome-dark:#6a5a78;
+  --sky:         #b8dff0;
+  --sky-light:   #d6eef9;
+  --blush:       #f5c8d8;
+  --blush-deep:  #e8a0bc;
+  --blush-mid:   #f0b4cb;
+  --lavender:    #d8c8f0;
+  --lav-soft:    #e8e0f8;
+  --mint:        #b8e8d4;
+  --butter:      #f8e8b0;
+  --butter-deep: #f0d080;
+  --peach:       #f8c8a8;
+  --white:       #fdfaff;
+  --white-dim:   rgba(253,250,255,.65);
+  --white-faint: rgba(253,250,255,.32);
+  --ink:         #2a1a2e;
+  --ink-soft:    #5a3a5e;
+  --ink-dim:     rgba(42,26,46,.45);
+  --fab-a:       #f0b4cb;
+  --fab-b:       #e89ab8;
+  --fab-c:       #d47a9e;
+  --bg-top:      #b8dff0;
+  --bg-mid:      #f0d0e0;
+  --bg-bot:      #e8d8f8;
+  --chrome-hi:   #fdfaff;
+  --chrome-mid:  #d8d0e0;
+  --chrome-low:  #a899b4;
+  --chrome-dark: #6a5a78;
 }
 
 html, body {
-  width:100%; height:100%;
+  width:100%; min-height:100%;
   background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
   background-attachment: fixed;
   font-family:'Cormorant Garamond',serif;
   color: var(--ink);
+  /* starts locked; JS releases after zipper */
+  overflow: hidden;
 }
 
-/* ═══════════════════════
-   LOGO HEADER BAR
-═══════════════════════ */
+/* ═════════════════════════════
+   SITE HEADER — shown after zip
+═════════════════════════════ */
 #site-header {
   position: sticky; top: 0; z-index: 40;
-  background: rgba(253,250,255,.82);
+  background: rgba(253,250,255,.88);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1.5px solid rgba(232,160,188,.22);
-  padding: .55rem 1.5rem;
+  padding: .5rem 1.4rem;
   display: flex; align-items: center; gap: .75rem;
-  box-shadow: 0 2px 18px rgba(232,160,188,.15);
+  box-shadow: 0 2px 18px rgba(232,160,188,.14);
 }
 #site-header img {
-  height: 46px; width: auto; object-fit: contain;
+  height: 42px; width: 42px;
+  object-fit: cover;
+  border-radius: 12px;          /* rounded edges */
+  box-shadow: 0 2px 8px rgba(180,100,160,.22);
 }
 .header-tagline {
-  font-family:'Nunito',sans-serif; font-size:.65rem;
+  font-family:'Nunito',sans-serif; font-size:.64rem;
   letter-spacing:.38em; text-transform:uppercase;
   color: var(--blush-deep); opacity:.82;
 }
 
-/* ═══════════════════════
-   CATALOG PAGE
-═══════════════════════ */
+/* ═════════════════════════════
+   CATALOG — the revealed content
+   Lives in normal page flow at y=0
+═════════════════════════════ */
 #page { position:relative; z-index:0; }
 #catalog { padding: 0 0 6rem; }
 
-.catalog-header { text-align:center; padding: 5rem 1.5rem 2.5rem; }
+.catalog-header { text-align:center; padding: 2rem 1.5rem 1.5rem; }
 .eyebrow {
   font-family:'Nunito',sans-serif;
   font-size:.68rem; letter-spacing:.52em; text-transform:uppercase;
-  color: var(--blush-deep); margin-bottom:.65rem; display:block;
+  color: var(--blush-deep); margin-bottom:.55rem; display:block;
 }
 .catalog-title {
   font-family:'Dancing Script',cursive; font-weight:700;
   font-size: clamp(2.8rem,8vw,6rem);
   color: var(--ink); letter-spacing:.02em; line-height:1;
-  text-shadow: 0 2px 12px rgba(232,160,188,.35);
+  text-shadow: 0 2px 12px rgba(232,160,188,.32);
 }
 
 /* Tabs */
 .cat-tabs {
   display:flex; justify-content:center;
-  border-bottom: 2px solid rgba(216,200,240,.4);
-  gap:.2rem;
+  border-bottom: 2px solid rgba(216,200,240,.4); gap:.2rem;
 }
 .cat-tab {
-  font-family:'Nunito',sans-serif;
-  font-size:.7rem; letter-spacing:.36em; text-transform:uppercase;
-  color: var(--ink-dim); padding:.88rem 1.4rem;
-  cursor:pointer; border-bottom: 2.5px solid transparent;
-  margin-bottom:-2px;
+  font-family:'Nunito',sans-serif; font-size:.7rem; letter-spacing:.36em; text-transform:uppercase;
+  color: var(--ink-dim); padding:.88rem 1.4rem; cursor:pointer;
+  border-bottom: 2.5px solid transparent; margin-bottom:-2px;
   transition: color .25s, border-color .25s; user-select:none; white-space:nowrap;
 }
 .cat-tab.active   { color: var(--ink); border-bottom-color: var(--blush-deep); }
 .cat-tab:hover:not(.active) { color: var(--ink-soft); }
-
 .cat-section { display:none; }
 .cat-section.active { display:block; }
 
@@ -132,11 +125,7 @@ html, body {
   border-radius:3px; box-shadow:0 3px 8px rgba(120,104,136,.5);
 }
 .rack-rail::before { left:-5px; } .rack-rail::after { right:-5px; }
-
-.hangers-row {
-  display:flex; justify-content:space-around; align-items:flex-start;
-  padding:0 .5rem; gap:.3rem;
-}
+.hangers-row { display:flex; justify-content:space-around; align-items:flex-start; padding:0 .5rem; gap:.3rem; }
 .hanger-item {
   flex:1; max-width:130px; cursor:pointer;
   display:flex; flex-direction:column; align-items:center;
@@ -152,7 +141,6 @@ html, body {
 .hanger-item:nth-child(2){animation:sway 5.7s ease-in-out infinite .5s;}
 .hanger-item:nth-child(3){animation:sway 4.8s ease-in-out infinite .9s;}
 .hanger-item:hover{animation:none;}
-
 .hanger-hook{width:60px;height:36px;flex-shrink:0;}
 .hanger-garment{width:100%;margin-top:-3px;}
 .hanger-garment svg{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 14px rgba(180,140,200,.45));}
@@ -171,19 +159,11 @@ html, body {
   box-shadow: inset 0 0 40px rgba(216,200,240,.2), 0 6px 24px rgba(180,140,180,.2);
   border-radius:4px; overflow:hidden;
 }
-.shelf-plank{
-  height:12px;
-  background: linear-gradient(to bottom,#d8c8e8,#c0b0d4 55%,#a898c0);
-  box-shadow: 0 5px 16px rgba(160,140,180,.45), inset 0 2px 0 rgba(255,255,255,.4);
-}
+.shelf-plank{height:12px;background:linear-gradient(to bottom,#d8c8e8,#c0b0d4 55%,#a898c0);box-shadow:0 5px 16px rgba(160,140,180,.45),inset 0 2px 0 rgba(255,255,255,.4);}
 .shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 22px,rgba(255,255,255,.05) 22px,rgba(255,255,255,.05) 23px);}
 .shelf-label{font-family:'Nunito',sans-serif;font-size:.6rem;letter-spacing:.5em;text-transform:uppercase;color:var(--ink-dim);padding:.75rem 1.2rem .35rem;}
 .folded-row{display:flex;gap:1px;padding:0 1px;}
-.folded-item{
-  flex:1;position:relative;cursor:pointer;overflow:hidden;
-  background:rgba(253,250,255,.4);
-  transition:transform .28s cubic-bezier(.23,1,.32,1),box-shadow .28s;
-}
+.folded-item{flex:1;position:relative;cursor:pointer;overflow:hidden;background:rgba(253,250,255,.4);transition:transform .28s cubic-bezier(.23,1,.32,1),box-shadow .28s;}
 .folded-item:hover{transform:translateY(-7px) scale(1.025);box-shadow:0 14px 28px rgba(180,140,200,.45),0 0 0 1.5px rgba(232,160,188,.35);z-index:2;}
 .folded-item:active{transform:translateY(-2px) scale(.99);}
 .folded-item svg{width:100%;height:auto;display:block;}
@@ -193,12 +173,7 @@ html, body {
 
 /* ── Shoe Display ── */
 .shoe-scene{padding:2rem 1rem .5rem;}
-.shoe-wall{
-  background:linear-gradient(to bottom,rgba(253,250,255,.55),rgba(240,228,248,.45));
-  border:1px solid rgba(216,200,240,.28);
-  position:relative;padding:1.2rem 1rem 0;overflow:hidden;
-  border-radius:4px;
-}
+.shoe-wall{background:linear-gradient(to bottom,rgba(253,250,255,.55),rgba(240,228,248,.45));border:1px solid rgba(216,200,240,.28);position:relative;padding:1.2rem 1rem 0;overflow:hidden;border-radius:4px;}
 .shoe-wall::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0,transparent 39px,rgba(216,200,240,.08) 39px,rgba(216,200,240,.08) 40px),repeating-linear-gradient(90deg,transparent 0,transparent 39px,rgba(216,200,240,.06) 39px,rgba(216,200,240,.06) 40px);}
 .shoes-row{display:flex;justify-content:space-around;align-items:flex-end;gap:.4rem;}
 .shoe-item{flex:1;max-width:140px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;transition:transform .3s cubic-bezier(.23,1,.32,1),filter .3s;}
@@ -213,52 +188,68 @@ html, body {
 .shoe-shelf-plank{height:13px;background:linear-gradient(to bottom,#d8c8e8,#c0b0d4 55%,#a898c0);box-shadow:0 7px 20px rgba(160,140,180,.4),inset 0 2px 0 rgba(255,255,255,.4);}
 .shoe-shelf-plank::after{content:'';display:block;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent 24px,rgba(255,255,255,.05) 24px,rgba(255,255,255,.05) 25px);}
 
-/* ═══════════════════════
-   ZIPPER OVERLAY
-═══════════════════════ */
+/* ═════════════════════════════
+   ZIPPER OVERLAY — position:fixed
+   Closes over the catalog at start,
+   wheel/touch events drive progress
+═════════════════════════════ */
 #zipper {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
+  position: fixed; inset: 0; z-index: 50;
   overflow: hidden;
+  /* pointer-events managed by JS */
 }
 #zipper.active { pointer-events: all; }
 
+/* Background — same gradient as body, fades out as zipper opens */
 #zipper-bg {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-bot) 100%);
+  transition: opacity .05s linear;
 }
 
+/* Gap warm glow */
 #gap-light {
   position:absolute; left:50%; transform:translateX(-50%);
   width:220px; top:0; z-index:3; pointer-events:none;
   background:radial-gradient(ellipse 55% 100% at 50% 0%,rgba(253,250,255,.55) 0%,transparent 70%);
 }
 
-/* Fabric panels */
+/* ── Fabric panels ──
+   Left: kats-icon.png   Right: kats-name.png
+   No pattern — just solid gradient + centered image
+*/
 .fp { position:absolute; top:0; height:100%; width:50%; will-change:transform,clip-path; z-index:10; }
 #fl-c, #fl-o { left:0; }
 #fr-c, #fr-o { right:0; }
 
+/* Base gradient for all panels */
 .fab {
   position:absolute; inset:0;
-  background: linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
 }
-/* soft texture dots */
-.fab::before {
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background-image: radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
-  background-size: 18px 18px;
+
+/* LEFT panels: icon centered on blush gradient */
+#fl-c .fab, #fl-o .fab {
+  background:
+    url('kats-icon.png') center center / 52% auto no-repeat,
+    linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
 }
+
+/* RIGHT panels: name centered on blush gradient */
+#fr-c .fab, #fr-o .fab {
+  background:
+    url('kats-name.png') center center / 68% auto no-repeat,
+    linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
+}
+
+/* Inner-edge depth shadow */
 #fl-c .fab::after, #fl-o .fab::after {
   content:''; position:absolute; right:0;top:0;bottom:0; width:60px;
-  background:linear-gradient(to left,rgba(180,80,120,.4),rgba(180,80,120,.1) 55%,transparent);
+  background:linear-gradient(to left,rgba(180,80,120,.35),rgba(180,80,120,.08) 55%,transparent);
   pointer-events:none;
 }
 #fr-c .fab::after, #fr-o .fab::after {
   content:''; position:absolute; left:0;top:0;bottom:0; width:60px;
-  background:linear-gradient(to right,rgba(180,80,120,.4),rgba(180,80,120,.1) 55%,transparent);
+  background:linear-gradient(to right,rgba(180,80,120,.35),rgba(180,80,120,.08) 55%,transparent);
   pointer-events:none;
 }
 
@@ -294,7 +285,7 @@ html, body {
   width:33px; height:20px;
   background:linear-gradient(180deg,var(--chrome-hi),var(--chrome-mid) 48%,var(--chrome-low));
   border-radius:3px; position:relative;
-  box-shadow: 0 2px 5px rgba(100,60,100,.4),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(100,60,100,.25);
+  box-shadow:0 2px 5px rgba(100,60,100,.4),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(100,60,100,.25);
 }
 .slider::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:7px;height:13px;background:linear-gradient(to bottom,var(--chrome-dark),var(--chrome-low));border-radius:1px;box-shadow:inset 0 1px 2px rgba(100,60,100,.4);}
 .slider::after{content:'';position:absolute;top:2px;left:4px;right:4px;height:3px;background:rgba(255,255,255,.55);border-radius:2px;}
@@ -305,15 +296,15 @@ html, body {
 /* Scroll hint */
 #hint {
   position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  z-index:100; text-align:center; transition:opacity .5s; pointer-events:none;
+  z-index:100; text-align:center; transition:opacity .4s; pointer-events:none;
 }
-#hint span{display:block;font-family:'Dancing Script',cursive;font-size:1.1rem;letter-spacing:.12em;color:rgba(42,26,46,.45);margin-bottom:.6rem;}
+#hint span{display:block;font-family:'Dancing Script',cursive;font-size:1.1rem;letter-spacing:.12em;color:rgba(42,26,46,.48);margin-bottom:.6rem;}
 .arr{width:1px;height:28px;margin:0 auto;background:linear-gradient(to bottom,rgba(232,160,188,.9),transparent);animation:pulse 2.2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:.25;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1.1)}}
 
-/* ═══════════════════════
+/* ═════════════════════════════
    MODAL
-═══════════════════════ */
+═════════════════════════════ */
 #modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(42,26,46,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .35s;}
 #modal-overlay.open{background:rgba(42,26,46,.88);pointer-events:all;}
 #modal{position:relative;width:min(92vw,480px);max-height:92vh;display:flex;flex-direction:column;overflow:hidden;border-radius:6px;opacity:0;transform:scale(.86) translateY(28px);transition:opacity .38s cubic-bezier(.23,1,.32,1),transform .38s cubic-bezier(.23,1,.32,1);box-shadow:0 20px 60px rgba(42,26,46,.55);}
@@ -340,7 +331,7 @@ html, body {
 #modal-close{position:absolute;top:.8rem;right:.8rem;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(253,250,255,.85);border:1.5px solid rgba(216,200,240,.5);color:var(--ink);font-size:.9rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,border-color .2s;backdrop-filter:blur(6px);}
 #modal-close:hover{background:rgba(232,160,188,.25);border-color:var(--blush-deep);}
 
-/* SVG product classes — pastel-rethemed */
+/* SVG product classes */
 .tb{fill:#d8eef8;}.ts{fill:#c4e0f0;}.tc{fill:#b8d8ec;}.td{stroke:rgba(42,26,46,.14);stroke-width:.9;fill:none;}.tn{fill:rgba(232,160,188,.7);}
 .eb{fill:#f8dce8;}.es{fill:#f0c8d8;}.ep{fill:rgba(216,180,240,.3);}.ep2{fill:rgba(216,180,240,.15);}
 .hb{fill:#f0d0e4;}.hpk{fill:#e8c4d8;stroke:rgba(42,26,46,.08);stroke-width:.7;}.hc{stroke:rgba(232,160,188,.6);stroke-width:1.3;fill:none;}.ht{fill:rgba(232,160,188,.65);}
@@ -352,21 +343,24 @@ html, body {
 .hlb{fill:#f0e0f0;}.hlh{fill:#e8d0e8;}.hls{fill:#e8d4ec;stroke:rgba(216,180,240,.4);stroke-width:.7;}.hlj{fill:rgba(232,160,188,.9);}
 
 @media(max-width:550px){
-  .hangers-row{padding:0 .3rem;gap:.15rem;} .hanger-item{max-width:100px;}
-  .shoes-row{gap:.25rem;} .shoe-item{max-width:105px;}
+  .hangers-row{padding:0 .3rem;gap:.15rem;}.hanger-item{max-width:100px;}
+  .shoes-row{gap:.25rem;}.shoe-item{max-width:105px;}
   .cat-tab{padding:.88rem .8rem;font-size:.62rem;letter-spacing:.25em;}
 }
 </style>
 </head>
 <body>
 
-<!-- LOGO HEADER -->
+<!-- SITE HEADER (sticky, appears once zipper is done) -->
 <header id="site-header">
-  <img src="kats-logo.png" alt="Kat's O-Boutique">
-  <span class="header-tagline">Est. 2020 · Zamboanga City</span>
+  <img src="kats-icon.png" alt="Kat's O-Boutique logo">
+  <div>
+    <div style="font-family:'Dancing Script',cursive;font-weight:700;font-size:1.1rem;color:var(--ink);line-height:1.1;">Kat's O-Boutique</div>
+    <span class="header-tagline">Est. 2020 · Zamboanga City</span>
+  </div>
 </header>
 
-<!-- CATALOG -->
+<!-- ══════════════ CATALOG — revealed behind zipper ══════════════ -->
 <div id="page">
   <div id="catalog">
 
@@ -395,8 +389,7 @@ html, body {
             </svg>
             <div class="hanger-garment">
               <svg viewBox="0 0 108 148">
-                <path class="ts" d="M28 18 L5 60 L22 68 L34 30 Z"/>
-                <path class="ts" d="M80 18 L103 60 L86 68 L74 30 Z"/>
+                <path class="ts" d="M28 18 L5 60 L22 68 L34 30 Z"/><path class="ts" d="M80 18 L103 60 L86 68 L74 30 Z"/>
                 <path class="tb" d="M28 18 L20 148 L88 148 L80 18 Z"/>
                 <path class="tc" d="M43 10 Q54 5 65 10 L69 20 Q54 15 39 20 Z"/>
                 <line class="td" x1="54" y1="19" x2="54" y2="142"/>
@@ -418,8 +411,7 @@ html, body {
             </svg>
             <div class="hanger-garment">
               <svg viewBox="0 0 108 142">
-                <path class="es" d="M30 16 L6 52 L26 60 L36 28 Z"/>
-                <path class="es" d="M78 16 L102 52 L82 60 L72 28 Z"/>
+                <path class="es" d="M30 16 L6 52 L26 60 L36 28 Z"/><path class="es" d="M78 16 L102 52 L82 60 L72 28 Z"/>
                 <path class="eb" d="M30 16 L22 142 L86 142 L78 16 Z"/>
                 <path style="fill:#f0c4d4" d="M42 8 Q54 2 66 8 L70 17 Q54 12 38 17 Z"/>
                 <rect class="ep" x="35" y="50" width="38" height="44" rx="2"/>
@@ -596,7 +588,7 @@ html, body {
   </div><!-- /catalog -->
 </div><!-- /page -->
 
-<!-- ZIPPER OVERLAY -->
+<!-- ══════════ ZIPPER OVERLAY ══════════ -->
 <div id="zipper" class="active">
   <div id="zipper-bg"></div>
   <div id="gap-light"></div>
@@ -606,10 +598,8 @@ html, body {
   <div class="fp" id="fr-c"><div class="fab"></div></div>
   <div class="fp" id="fr-o"><div class="fab"></div></div>
 
-  <div id="tw-l"></div>
-  <div id="tw-r"></div>
-  <div id="spine"></div>
-  <div id="crease"></div>
+  <div id="tw-l"></div><div id="tw-r"></div>
+  <div id="spine"></div><div id="crease"></div>
 
   <div id="tab">
     <div class="slider"></div>
@@ -617,13 +607,10 @@ html, body {
     <div class="ring"></div>
   </div>
 
-  <div id="hint">
-    <span>Scroll to unzip ✨</span>
-    <div class="arr"></div>
-  </div>
+  <div id="hint"><span>Scroll to unzip ✨</span><div class="arr"></div></div>
 </div>
 
-<!-- MODAL -->
+<!-- ══════════ MODAL ══════════ -->
 <div id="modal-overlay">
   <div id="modal">
     <button id="modal-close">✕</button>
@@ -644,10 +631,15 @@ html, body {
 </div>
 
 <script>
-/* ─────────── CONFIG ─────────── */
-const SCROLL_RANGE = window.innerHeight;
+/* ═══════════════════════════════════════════
+   ZIPPER ENGINE
+   • body starts overflow:hidden
+   • Wheel / touch events drive p (0→1)
+   • p=1: zipper gone, body unlocked, browse freely
+   • Scroll to top + wheel-up: re-lock and close zipper
+═══════════════════════════════════════════ */
 
-/* ─────────── BUILD TEETH ─────────── */
+/* ── Build teeth ── */
 const STEP=14, TW=13;
 function buildTeeth(wrap,side){
   const n=Math.ceil(window.innerHeight/STEP)+8;
@@ -663,7 +655,7 @@ function buildTeeth(wrap,side){
 buildTeeth(document.getElementById('tw-l'),'l');
 buildTeeth(document.getElementById('tw-r'),'r');
 
-/* ─────────── ELEMENTS ─────────── */
+/* ── Elements ── */
 const flC    = document.getElementById('fl-c');
 const flO    = document.getElementById('fl-o');
 const frC    = document.getElementById('fr-c');
@@ -678,26 +670,30 @@ const zipBg  = document.getElementById('zipper-bg');
 const zipper = document.getElementById('zipper');
 const hint   = document.getElementById('hint');
 
-/* ─────────── ZIPPER UPDATE ─────────── */
-function update(p){
+/* ── State ── */
+let p = 0;           // 0 = closed, 1 = open
+let phase = 'zip';   // 'zip' | 'browse'
+
+/* ── Render ── */
+function update(val) {
+  p = Math.max(0, Math.min(1, val));
+
   const H = window.innerHeight;
   const W = window.innerWidth;
-  const tabY   = p * H;
-  const pct    = p * 100;
-  const spread = p * 28;           // vw — how far panels peel apart
+  const tabY     = p * H;
+  const pct      = p * 100;
+  const spread   = p * 28;
   const spreadPx = spread / 100 * W;
 
   tabEl.style.top  = (tabY - 10) + 'px';
   crease.style.top = tabY + 'px';
   spine.style.top  = tabY + 'px';
   spine.style.height = Math.max(0, H - tabY) + 'px';
-  glow.style.height = tabY + 'px';
+  glow.style.height  = tabY + 'px';
 
-  // Fade dark bg as zipper opens
+  // Bg fades revealing catalog beneath
   zipBg.style.opacity = (1 - p).toString();
 
-  // Fabric: closed portion stays; open portion peels away
-  // The key fix for big screens: clip-path uses viewport-relative % of screen height
   flC.style.clipPath = `polygon(0 ${pct}%,100% ${pct}%,100% 100%,0 100%)`;
   flO.style.transform = `translateX(-${spread}vw)`;
   flO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
@@ -706,42 +702,90 @@ function update(p){
   frO.style.transform = `translateX(${spread}vw)`;
   frO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
 
-  // Teeth follow fabric edges
   twL.style.transform = `translateX(-${spreadPx}px)`;
   twL.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
   twR.style.transform = `translateX(${spreadPx}px)`;
   twR.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
 
   hint.style.opacity = p < 0.04 ? '1' : '0';
+}
 
-  if(p >= 1){
-    zipper.classList.remove('active');
-    zipper.style.display = 'none';
+/* ── Open: release page scrolling ── */
+function openComplete() {
+  phase = 'browse';
+  zipper.style.display = 'none';
+  zipper.classList.remove('active');
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = 'auto';
+}
+
+/* ── Close: re-lock and show zipper ── */
+function startClose() {
+  phase = 'zip';
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  window.scrollTo(0, 0);
+  zipper.style.display = '';
+  zipper.classList.add('active');
+}
+
+/* ── Wheel: drive zipper OR let page scroll ── */
+const WHEEL_SENSITIVITY = 0.0012; // tune: how fast zipper responds
+window.addEventListener('wheel', (e) => {
+  if (phase === 'zip') {
+    e.preventDefault();
+    const delta = e.deltaY * WHEEL_SENSITIVITY;
+    const next = p + delta;
+    update(next);
+    if (p >= 1) openComplete();
   } else {
-    zipper.style.display = '';
-    zipper.classList.add('active');
-    zipper.style.pointerEvents = 'all';
+    // In browse phase, if at very top and scrolling up → reactivate zipper
+    if (window.scrollY === 0 && e.deltaY < 0) {
+      startClose();
+      update(1); // start from fully open, close from top
+    }
   }
-}
+}, { passive: false });
 
-/* ─────────── SCROLL DRIVER ─────────── */
-const spacer = document.createElement('div');
-spacer.style.cssText = `height:${SCROLL_RANGE}px;pointer-events:none;`;
-document.getElementById('page').prepend(spacer);
+/* ── Touch: drive zipper ── */
+let touchStartY = 0;
+let touchLastY = 0;
+window.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+  touchLastY  = touchStartY;
+}, { passive: true });
 
-document.documentElement.style.overflow = 'auto';
-document.body.style.overflow = 'visible';
+window.addEventListener('touchmove', (e) => {
+  if (phase !== 'zip') return;
+  e.preventDefault();
+  const y   = e.touches[0].clientY;
+  const dy  = touchLastY - y;               // positive = scroll down
+  touchLastY = y;
+  const next = p + dy / window.innerHeight;
+  update(next);
+  if (p >= 1) openComplete();
+}, { passive: false });
 
-function onScroll(){
-  const p = Math.max(0, Math.min(1, window.scrollY / SCROLL_RANGE));
-  update(p);
-}
+/* ── Keyboard accessibility ── */
+window.addEventListener('keydown', (e) => {
+  if (phase !== 'zip') return;
+  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault();
+    update(p + 0.12);
+    if (p >= 1) openComplete();
+  }
+  if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    update(p - 0.12);
+  }
+});
 
-window.addEventListener('scroll', onScroll, {passive:true});
-window.addEventListener('resize', () => { onScroll(); });
+/* ── Initial render ── */
 update(0);
 
-/* ─────────── CATALOG TABS ─────────── */
+/* ══════════════════════════════
+   CATALOG TABS
+══════════════════════════════ */
 document.querySelectorAll('.cat-tab').forEach(t => {
   t.addEventListener('click', () => {
     document.querySelectorAll('.cat-tab').forEach(x => x.classList.remove('active'));
@@ -751,7 +795,9 @@ document.querySelectorAll('.cat-tab').forEach(t => {
   });
 });
 
-/* ─────────── PRODUCT DATA ─────────── */
+/* ══════════════════════════════
+   PRODUCT DATA
+══════════════════════════════ */
 const D=[
   {cat:'Tops · New Arrivals',name:'Linen Overshirt',desc:'Relaxed linen overshirt with dual chest pockets, clean button placket, and raw-edge seam detailing. Perfect for effortless layering.',price:'₱ 2,890',orig:'₱ 3,500',colors:['#b8dff0','#f5c8d8','#d8c8f0'],sizes:['XS','S','M','L','XL','XXL'],bg:'linear-gradient(145deg,#d0eaf8,#e8f4fc)'},
   {cat:'Tops · New Arrivals',name:'Graphic Print Tee',desc:'Heavyweight 240gsm cotton with bold front graphic. Dropped shoulders, relaxed silhouette, raw hem finish.',price:'₱ 1,290',orig:'',colors:['#f5c8d8','#d8c8f0','#b8e8d4'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#f8dce8,#fce8f0)'},
@@ -761,7 +807,7 @@ const D=[
   {cat:'Bottoms · New Arrivals',name:'Slim Trousers',desc:'Tailored slim trousers with mid-rise waist, front crease, and concealed side pockets.',price:'₱ 2,490',orig:'',colors:['#f8ece8','#f5c8d8','#d8c8f0'],sizes:['XS','S','M','L','XL'],bg:'linear-gradient(145deg,#fce8e4,#fef4f0)'},
   {cat:'Shoes · New Arrivals',name:'Platform Sneaker',desc:"Chunky platform runner with stacked EVA midsole and technical upper. Blush sole stripe — unmistakably Kat's.",price:'₱ 4,890',orig:'₱ 5,990',colors:['#fdfaff','#f5c8d8','#b8dff0'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#e8f4fc,#f0f8fe)'},
   {cat:'Shoes · New Arrivals',name:'Combat Boot',desc:'Leather-look combat boot with buckle strap, lace-up front, and lug sole.',price:'₱ 5,290',orig:'',colors:['#f0d8e4','#d8c8f0','#f5c8d8'],sizes:['36','37','38','39','40','41','42','43'],bg:'linear-gradient(145deg,#f4e0ec,#fceaf4)'},
-  {cat:'Shoes · New Arrivals',name:'Chain Stiletto',desc:'Pointed-toe stiletto with delicate ankle strap and gold chain embellishment.',price:'₱ 3,890',orig:'',colors:['#e8d0f0','#f5c8d8','#d8c8f0'],sizes:['35','36','37','38','39','40','41'],bg:'linear-gradient(145deg,#ead8f4,#f4ecfc)'},
+  {cat:'Shoes · New Arrivals',name:'Chain Stiletto',desc:'Pointed-toe stiletto with delicate ankle strap and blush chain embellishment.',price:'₱ 3,890',orig:'',colors:['#e8d0f0','#f5c8d8','#d8c8f0'],sizes:['35','36','37','38','39','40','41'],bg:'linear-gradient(145deg,#ead8f4,#f4ecfc)'},
 ];
 
 const MS=[
@@ -776,7 +822,9 @@ const MS=[
   `<svg viewBox="0 0 160 165" width="74%" style="filter:drop-shadow(0 14px 30px rgba(180,140,200,.5))"><path class="hlb" d="M13 106 Q11 130 27 134 L116 132 Q132 128 132 114 L124 102 Z"/><path class="hlb" d="M17 102 Q21 68 44 54 L102 51 Q120 53 124 70 L124 102 Z"/><path class="hls" d="M21 72 Q72 63 130 72 Q134 84 130 88 Q72 79 21 88 Z"/><path class="hlh" d="M114 126 L112 164 Q116 166 120 164 L122 126 Z"/><path style="fill:#ead4ec" d="M11 128 Q9 144 27 148 L116 146 Q132 142 132 128 L116 132 L27 134 Z"/><path class="hls" d="M32 102 Q72 94 124 102 Q122 114 118 116 Q72 108 36 114 Z"/><circle class="hlj" cx="74" cy="80" r="6"/><circle style="fill:rgba(232,160,188,.28)" cx="74" cy="80" r="12"/><g style="stroke:rgba(232,160,188,.6);stroke-width:1.1;fill:none"><circle cx="53" cy="80" r="5"/><circle cx="64" cy="80" r="5"/><circle cx="84" cy="80" r="5"/><circle cx="95" cy="80" r="5"/></g></svg>`,
 ];
 
-/* ─────────── MODAL ─────────── */
+/* ══════════════════════════════
+   MODAL
+══════════════════════════════ */
 const ov = document.getElementById('modal-overlay');
 document.querySelectorAll('[data-item]').forEach(el => {
   el.addEventListener('click', () => {
