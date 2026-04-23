@@ -235,36 +235,48 @@ html, body {
 
 
 
-/* ── 2 fabric panels — left slides left, right slides right ── */
-.fp {
-  position: absolute; top: 0; height: 100%; width: 50%;
-  will-change: transform; z-index: 10;
-}
-#fl { left: 0; }
-#fr { right: 0; }
-
-.fab { position: absolute; inset: 0; }
-#fl .fab, #fr .fab {
+/* ── 4-panel zipper: open (spreading above tab) + closed (static below tab) ──
+   background-attachment:fixed keeps the gradient seamless across all 4 panels
+   even as the open panels translate horizontally.                              */
+.ph {
+  position: fixed; top: 0; width: 50%; z-index: 10;
   background: linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
+  background-attachment: fixed;
+  will-change: transform, height;
+  overflow: hidden;
 }
+/* Open panels — above the tab, spread left/right */
+#fl-o { left: 0; }
+#fr-o { right: 0; }
+/* Closed panels — below the tab, stationary at center seam */
+#fl-c { left: 0; }
+#fr-c { right: 0; }
 
-/* Inner-edge depth shadow */
-#fl .fab::after {
+/* Inner-edge depth shadow on the open (revealed) panels */
+#fl-o::after {
   content:''; position:absolute; right:0; top:0; bottom:0; width:60px;
   background: linear-gradient(to left, rgba(180,80,120,.35), rgba(180,80,120,.08) 55%, transparent);
   pointer-events: none;
 }
-#fr .fab::after {
+#fr-o::after {
   content:''; position:absolute; left:0; top:0; bottom:0; width:60px;
   background: linear-gradient(to right, rgba(180,80,120,.35), rgba(180,80,120,.08) 55%, transparent);
   pointer-events: none;
 }
 
-/* LEFT avatar — centered on the left half-panel */
+/* Panel content (avatar + brand) — overlaid, fades as zipper opens */
+.panel-cnt {
+  position: fixed; top: 0; width: 50%; height: 100%;
+  z-index: 12; pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  will-change: transform, opacity;
+}
+#pcl { left: 0; }
+#pcr { right: 0; }
+
+/* LEFT avatar — centered on the left panel-cnt */
 .panel-avatar {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
+  position: relative;
   width: clamp(90px, 38%, 150px);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -272,19 +284,17 @@ html, body {
   border: 3px solid rgba(253,250,255,.8);
   box-shadow: 0 4px 20px rgba(180,80,140,.4), 0 0 0 5px rgba(253,250,255,.2);
   pointer-events: none;
-  z-index: 2;
+  margin-top: -20%;
 }
 .panel-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* RIGHT brand text — centered on the right half-panel */
+/* RIGHT brand text — centered on the right panel-cnt */
 .panel-brand {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
+  position: relative;
   text-align: center;
   pointer-events: none;
-  z-index: 2;
   width: 88%;
+  margin-top: -20%;
 }
 .panel-brand-name {
   font-family: 'Dancing Script', cursive;
@@ -650,16 +660,28 @@ html, body {
   </div><!-- /catalog -->
 </div><!-- /page -->
 
-<!-- ══════════ ZIPPER OVERLAY ══════════ -->
+<!-- ══════════ ZIPPER OVERLAY ══════════
+  4-panel system:
+    #fl-c / #fr-c  = closed panels (stationary, BELOW the tab)
+    #fl-o / #fr-o  = open  panels  (spreading, ABOVE the tab — already unzipped)
+  This recreates the real-zipper behaviour: fabric stays closed below
+  the slider and splits apart only in the section already passed by the tab.
+══════════ -->
 <div id="zipper" class="active">
-  <div id="zipper-bg"></div>
 
-  <div class="fp" id="fl">
-    <div class="fab"></div>
+  <!-- Closed panels (below tab — stationary, no horizontal movement) -->
+  <div class="ph" id="fl-c"></div>
+  <div class="ph" id="fr-c"></div>
+
+  <!-- Open panels (above tab — spreading apart as zipper pulls down) -->
+  <div class="ph" id="fl-o"></div>
+  <div class="ph" id="fr-o"></div>
+
+  <!-- Panel content: avatar left, brand right — fades as zipper opens -->
+  <div class="panel-cnt" id="pcl">
     <div class="panel-avatar"><img src="kats-logo.png" alt="Kat's"></div>
   </div>
-  <div class="fp" id="fr">
-    <div class="fab"></div>
+  <div class="panel-cnt" id="pcr">
     <div class="panel-brand">
       <div class="panel-brand-name">Kat's O-Boutique</div>
       <div class="panel-brand-est">Est. 2020</div>
@@ -724,14 +746,17 @@ buildTeeth(document.getElementById('tw-l'),'l');
 buildTeeth(document.getElementById('tw-r'),'r');
 
 /* ── Elements ── */
-const flEl   = document.getElementById('fl');
-const frEl   = document.getElementById('fr');
+const flOpenEl   = document.getElementById('fl-o');
+const frOpenEl   = document.getElementById('fr-o');
+const flClosedEl = document.getElementById('fl-c');
+const frClosedEl = document.getElementById('fr-c');
+const pclEl  = document.getElementById('pcl');
+const pcrEl  = document.getElementById('pcr');
 const twL    = document.getElementById('tw-l');
 const twR    = document.getElementById('tw-r');
 const spine  = document.getElementById('spine');
 const crease = document.getElementById('crease');
 const tabEl  = document.getElementById('tab');
-const zipBg  = document.getElementById('zipper-bg');
 const zipper = document.getElementById('zipper');
 const hint   = document.getElementById('hint');
 
@@ -739,32 +764,57 @@ const hint   = document.getElementById('hint');
 let p = 0;
 let phase = 'zip';
 
-/* ── Render ── */
+/* ── Render ──
+   Real zipper physics:
+   • ABOVE the tab (y < tabY):  fabric has already been unzipped → panels spread APART
+   • BELOW the tab (y > tabY):  fabric still zipped → panels stay at centre seam
+
+   We achieve this with 4 panels:
+     fl-o / fr-o  height = tabY,   translateX = ±spreadPx   (open, spreading)
+     fl-c / fr-c  top    = tabY,   no translate              (closed, static)
+
+   background-attachment:fixed keeps the same gradient coords across all 4,
+   so the seam between open and closed panels is invisible.
+── */
 function update(val) {
   p = Math.max(0, Math.min(1, val));
 
-  const H = window.innerHeight;
-  const W = window.innerWidth;
-  const tabY     = p * H;
-  const spread   = p * 50; // vw — each panel slides up to 50vw away
-  const spreadPx = spread / 100 * W;
+  const H       = window.innerHeight;
+  const W       = window.innerWidth;
+  const tabY    = p * H;
+  const spreadPx = p * (W * 0.5);   // each panel travels up to half the viewport width
 
-  // Tab + zipper hardware follow the pull
-  tabEl.style.top  = (tabY - 10) + 'px';
-  crease.style.top = tabY + 'px';
-  spine.style.top  = tabY + 'px';
-  spine.style.height = Math.max(0, H - tabY) + 'px';
+  /* ─ Open (unzipped) panels — grow downward from top, spread apart ─ */
+  flOpenEl.style.height    = tabY + 'px';
+  flOpenEl.style.transform = `translateX(-${spreadPx}px)`;
+  frOpenEl.style.height    = tabY + 'px';
+  frOpenEl.style.transform = `translateX(${spreadPx}px)`;
 
-  // Background fades out as panels pull apart
-  zipBg.style.opacity = Math.max(0, 1 - p * 1.6).toString();
+  /* ─ Closed (zipped) panels — shrink from top, no horizontal movement ─ */
+  const closedH = Math.max(0, H - tabY);
+  flClosedEl.style.top    = tabY + 'px';
+  flClosedEl.style.height = closedH + 'px';
+  frClosedEl.style.top    = tabY + 'px';
+  frClosedEl.style.height = closedH + 'px';
 
-  // Panels slide apart — left goes left, right goes right
-  flEl.style.transform = `translateX(-${spread}vw)`;
-  frEl.style.transform = `translateX(${spread}vw)`;
+  /* ─ Panel content (avatar + brand) moves with open panels, fades out ─ */
+  const contentOpacity = Math.max(0, 1 - p * 3.2);
+  pclEl.style.opacity   = contentOpacity;
+  pcrEl.style.opacity   = contentOpacity;
+  pclEl.style.transform = `translateX(-${spreadPx * 0.55}px)`;
+  pcrEl.style.transform = `translateX(${spreadPx * 0.55}px)`;
 
-  // Teeth travel with panels
-  twL.style.transform = `translateX(-${spreadPx}px)`;
-  twR.style.transform = `translateX(${spreadPx}px)`;
+  /* ─ Tab + zipper hardware follow the pull ─ */
+  tabEl.style.top    = (tabY - 10) + 'px';
+  crease.style.top   = tabY + 'px';
+  spine.style.top    = tabY + 'px';
+  spine.style.height = closedH + 'px';
+
+  /* ─ Teeth: only visible in the closed section (below tab), no side movement ─ */
+  twL.style.transform = 'none';
+  twR.style.transform = 'none';
+  twL.style.clipPath  = `polygon(0 ${tabY}px, 100% ${tabY}px, 100% ${H}px, 0 ${H}px)`;
+  twR.style.clipPath  = `polygon(0 ${tabY}px, 100% ${tabY}px, 100% ${H}px, 0 ${H}px)`;
 
   hint.style.opacity = p < 0.04 ? '1' : '0';
 }
