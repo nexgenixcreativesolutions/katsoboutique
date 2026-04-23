@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kat's O-Boutique — New Arrivals</title>
-<link rel="icon" type="image/png" href="kats-icon.png">
+<link rel="icon" type="image/png" href="kats-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -61,17 +61,43 @@ html, body {
   padding: .5rem 1.4rem;
   display: flex; align-items: center; gap: .75rem;
   box-shadow: 0 2px 18px rgba(232,160,188,.14);
+  justify-content: space-between;
 }
+.header-left { display: flex; align-items: center; gap: .75rem; }
 #site-header img {
   height: 42px; width: 42px;
   object-fit: cover;
-  border-radius: 12px;          /* rounded edges */
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(180,100,160,.22);
 }
 .header-tagline {
   font-family:'Nunito',sans-serif; font-size:.64rem;
   letter-spacing:.38em; text-transform:uppercase;
   color: var(--blush-deep); opacity:.82;
+}
+.header-nav { display: flex; align-items: center; gap: .55rem; }
+.header-nav a {
+  font-family: 'Nunito', sans-serif;
+  font-size: .65rem; font-weight: 700;
+  letter-spacing: .32em; text-transform: uppercase;
+  text-decoration: none;
+  padding: .42rem 1rem;
+  border-radius: 30px;
+  border: 1.5px solid rgba(232,160,188,.45);
+  color: var(--ink-soft);
+  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+  white-space: nowrap;
+}
+.header-nav a:hover {
+  background: var(--blush-deep);
+  border-color: var(--blush-deep);
+  color: white;
+  box-shadow: 0 3px 12px rgba(232,160,188,.45);
+}
+.header-nav a.active {
+  background: var(--blush-deep);
+  border-color: var(--blush-deep);
+  color: white;
 }
 
 /* ═════════════════════════════
@@ -207,66 +233,96 @@ html, body {
   transition: opacity .05s linear;
 }
 
-/* Gap warm glow */
-#gap-light {
-  position:absolute; left:50%; transform:translateX(-50%);
-  width:220px; top:0; z-index:3; pointer-events:none;
-  background:radial-gradient(ellipse 55% 100% at 50% 0%,rgba(253,250,255,.55) 0%,transparent 70%);
+
+
+/* ── 2 fabric panels — left slides left, right slides right ── */
+.fp {
+  position: absolute; top: 0; height: 100%; width: 50%;
+  will-change: transform; z-index: 10;
 }
+#fl { left: 0; }
+#fr { right: 0; }
 
-/* ── Fabric panels ──
-   Left: kats-icon.png   Right: kats-name.png
-   No pattern — just solid gradient + centered image
-*/
-.fp { position:absolute; top:0; height:100%; width:50%; will-change:transform,clip-path; z-index:10; }
-#fl-c, #fl-o { left:0; }
-#fr-c, #fr-o { right:0; }
-
-/* Base gradient for all panels */
-.fab {
-  position:absolute; inset:0;
-}
-
-/* LEFT panels: icon centered on blush gradient */
-#fl-c .fab, #fl-o .fab {
-  background:
-    url('kats-icon.png') center center / 52% auto no-repeat,
-    linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
-}
-
-/* RIGHT panels: name centered on blush gradient */
-#fr-c .fab, #fr-o .fab {
-  background:
-    url('kats-name.png') center center / 68% auto no-repeat,
-    linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
+.fab { position: absolute; inset: 0; }
+#fl .fab, #fr .fab {
+  background: linear-gradient(165deg, var(--fab-a) 0%, var(--fab-b) 45%, var(--fab-c) 100%);
 }
 
 /* Inner-edge depth shadow */
-#fl-c .fab::after, #fl-o .fab::after {
-  content:''; position:absolute; right:0;top:0;bottom:0; width:60px;
-  background:linear-gradient(to left,rgba(180,80,120,.35),rgba(180,80,120,.08) 55%,transparent);
-  pointer-events:none;
+#fl .fab::after {
+  content:''; position:absolute; right:0; top:0; bottom:0; width:60px;
+  background: linear-gradient(to left, rgba(180,80,120,.35), rgba(180,80,120,.08) 55%, transparent);
+  pointer-events: none;
 }
-#fr-c .fab::after, #fr-o .fab::after {
-  content:''; position:absolute; left:0;top:0;bottom:0; width:60px;
-  background:linear-gradient(to right,rgba(180,80,120,.35),rgba(180,80,120,.08) 55%,transparent);
-  pointer-events:none;
+#fr .fab::after {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:60px;
+  background: linear-gradient(to right, rgba(180,80,120,.35), rgba(180,80,120,.08) 55%, transparent);
+  pointer-events: none;
+}
+
+/* LEFT avatar — centered on the left half-panel */
+.panel-avatar {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  width: clamp(90px, 38%, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(253,250,255,.8);
+  box-shadow: 0 4px 20px rgba(180,80,140,.4), 0 0 0 5px rgba(253,250,255,.2);
+  pointer-events: none;
+  z-index: 2;
+}
+.panel-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* RIGHT brand text — centered on the right half-panel */
+.panel-brand {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  width: 88%;
+}
+.panel-brand-name {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 5vw, 2.8rem);
+  color: rgba(253,250,255,.96);
+  line-height: 1.1;
+  text-shadow: 0 2px 12px rgba(160,60,110,.5);
+  white-space: nowrap;
+}
+.panel-brand-est {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: clamp(.55rem, 1.4vw, .82rem);
+  letter-spacing: .46em;
+  text-transform: uppercase;
+  color: rgba(253,250,255,.82);
+  margin-top: .3rem;
+  text-shadow: 0 1px 6px rgba(160,60,110,.35);
 }
 
 /* Teeth */
 #tw-l, #tw-r {
-  position:absolute; top:0; height:100%; width:16px;
-  z-index:20; pointer-events:none; overflow:visible; will-change:transform,clip-path;
+  position: absolute; top: 0; height: 100%; width: 16px;
+  z-index: 20; pointer-events: none; overflow: visible;
+  will-change: transform, clip-path;
+  transition: transform .04s linear, clip-path .04s linear;
 }
-#tw-l { left:calc(50% - 16px); }
-#tw-r { left:50%; }
+#tw-l { left: calc(50% - 16px); }
+#tw-r { left: 50%; }
 
 /* Spine */
 #spine {
-  position:absolute; left:50%; transform:translateX(-50%);
-  z-index:12; width:5px;
-  background:linear-gradient(to right,var(--chrome-dark),var(--chrome-low),var(--chrome-dark));
-  box-shadow:0 0 6px rgba(180,80,140,.4);
+  position: absolute; left: 50%; transform: translateX(-50%);
+  z-index: 12; width: 5px;
+  background: linear-gradient(to right, var(--chrome-dark), var(--chrome-low), var(--chrome-dark));
+  box-shadow: 0 0 6px rgba(180,80,140,.4);
+  transition: top .04s linear, height .04s linear;
 }
 #crease {
   position:absolute; left:0;right:0; height:3px; z-index:25; pointer-events:none;
@@ -353,11 +409,17 @@ html, body {
 
 <!-- SITE HEADER (sticky, appears once zipper is done) -->
 <header id="site-header">
-  <img src="kats-icon.png" alt="Kat's O-Boutique logo">
-  <div>
-    <div style="font-family:'Dancing Script',cursive;font-weight:700;font-size:1.1rem;color:var(--ink);line-height:1.1;">Kat's O-Boutique</div>
-    <span class="header-tagline">Est. 2020 · Zamboanga City</span>
+  <div class="header-left">
+    <img src="kats-logo.png" alt="Kat's O-Boutique logo">
+    <div>
+      <div style="font-family:'Dancing Script',cursive;font-weight:700;font-size:1.1rem;color:var(--ink);line-height:1.1;">Kat's O-Boutique</div>
+      <span class="header-tagline">Est. 2020 · Zamboanga City</span>
+    </div>
   </div>
+  <nav class="header-nav">
+    <a href="https://nexgenixbusinessschool.github.io/katsoboutique/shop" class="active">Shop</a>
+    <a href="https://nexgenixbusinessschool.github.io/katsoboutique/contact">Contact</a>
+  </nav>
 </header>
 
 <!-- ══════════════ CATALOG — revealed behind zipper ══════════════ -->
@@ -591,12 +653,18 @@ html, body {
 <!-- ══════════ ZIPPER OVERLAY ══════════ -->
 <div id="zipper" class="active">
   <div id="zipper-bg"></div>
-  <div id="gap-light"></div>
 
-  <div class="fp" id="fl-c"><div class="fab"></div></div>
-  <div class="fp" id="fl-o"><div class="fab"></div></div>
-  <div class="fp" id="fr-c"><div class="fab"></div></div>
-  <div class="fp" id="fr-o"><div class="fab"></div></div>
+  <div class="fp" id="fl">
+    <div class="fab"></div>
+    <div class="panel-avatar"><img src="kats-logo.png" alt="Kat's"></div>
+  </div>
+  <div class="fp" id="fr">
+    <div class="fab"></div>
+    <div class="panel-brand">
+      <div class="panel-brand-name">Kat's O-Boutique</div>
+      <div class="panel-brand-est">Est. 2020</div>
+    </div>
+  </div>
 
   <div id="tw-l"></div><div id="tw-r"></div>
   <div id="spine"></div><div id="crease"></div>
@@ -656,23 +724,20 @@ buildTeeth(document.getElementById('tw-l'),'l');
 buildTeeth(document.getElementById('tw-r'),'r');
 
 /* ── Elements ── */
-const flC    = document.getElementById('fl-c');
-const flO    = document.getElementById('fl-o');
-const frC    = document.getElementById('fr-c');
-const frO    = document.getElementById('fr-o');
+const flEl   = document.getElementById('fl');
+const frEl   = document.getElementById('fr');
 const twL    = document.getElementById('tw-l');
 const twR    = document.getElementById('tw-r');
 const spine  = document.getElementById('spine');
 const crease = document.getElementById('crease');
 const tabEl  = document.getElementById('tab');
-const glow   = document.getElementById('gap-light');
 const zipBg  = document.getElementById('zipper-bg');
 const zipper = document.getElementById('zipper');
 const hint   = document.getElementById('hint');
 
 /* ── State ── */
-let p = 0;           // 0 = closed, 1 = open
-let phase = 'zip';   // 'zip' | 'browse'
+let p = 0;
+let phase = 'zip';
 
 /* ── Render ── */
 function update(val) {
@@ -681,31 +746,25 @@ function update(val) {
   const H = window.innerHeight;
   const W = window.innerWidth;
   const tabY     = p * H;
-  const pct      = p * 100;
-  const spread   = p * 28;
+  const spread   = p * 50; // vw — each panel slides up to 50vw away
   const spreadPx = spread / 100 * W;
 
+  // Tab + zipper hardware follow the pull
   tabEl.style.top  = (tabY - 10) + 'px';
   crease.style.top = tabY + 'px';
   spine.style.top  = tabY + 'px';
   spine.style.height = Math.max(0, H - tabY) + 'px';
-  glow.style.height  = tabY + 'px';
 
-  // Bg fades revealing catalog beneath
-  zipBg.style.opacity = (1 - p).toString();
+  // Background fades out as panels pull apart
+  zipBg.style.opacity = Math.max(0, 1 - p * 1.6).toString();
 
-  flC.style.clipPath = `polygon(0 ${pct}%,100% ${pct}%,100% 100%,0 100%)`;
-  flO.style.transform = `translateX(-${spread}vw)`;
-  flO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
+  // Panels slide apart — left goes left, right goes right
+  flEl.style.transform = `translateX(-${spread}vw)`;
+  frEl.style.transform = `translateX(${spread}vw)`;
 
-  frC.style.clipPath = `polygon(0 ${pct}%,100% ${pct}%,100% 100%,0 100%)`;
-  frO.style.transform = `translateX(${spread}vw)`;
-  frO.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
-
+  // Teeth travel with panels
   twL.style.transform = `translateX(-${spreadPx}px)`;
-  twL.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
   twR.style.transform = `translateX(${spreadPx}px)`;
-  twR.style.clipPath  = `polygon(0 0%,100% 0%,100% ${pct}%,0 ${pct}%)`;
 
   hint.style.opacity = p < 0.04 ? '1' : '0';
 }
@@ -729,25 +788,29 @@ function startClose() {
   zipper.classList.add('active');
 }
 
-/* ── Wheel: drive zipper OR let page scroll ── */
-const WHEEL_SENSITIVITY = 0.0012; // tune: how fast zipper responds
+/* ── Wheel: drive zipper both ways ── */
+const WHEEL_SENSITIVITY = 0.0012;
 window.addEventListener('wheel', (e) => {
   if (phase === 'zip') {
+    // Zipper is active — intercept all wheel events
     e.preventDefault();
-    const delta = e.deltaY * WHEEL_SENSITIVITY;
-    const next = p + delta;
+    const next = p + e.deltaY * WHEEL_SENSITIVITY;
     update(next);
     if (p >= 1) openComplete();
   } else {
-    // In browse phase, if at very top and scrolling up → reactivate zipper
+    // Browsing — intercept only when at very top and scrolling up
     if (window.scrollY === 0 && e.deltaY < 0) {
+      e.preventDefault();
       startClose();
-      update(1); // start from fully open, close from top
+      // Drive closing: scrolling up decreases p from 1 toward 0
+      const next = p + e.deltaY * WHEEL_SENSITIVITY; // deltaY negative → p decreases
+      update(next);
+      if (p <= 0) update(0);
     }
   }
 }, { passive: false });
 
-/* ── Touch: drive zipper ── */
+/* ── Touch: drive zipper both ways ── */
 let touchStartY = 0;
 let touchLastY = 0;
 window.addEventListener('touchstart', (e) => {
@@ -756,28 +819,42 @@ window.addEventListener('touchstart', (e) => {
 }, { passive: true });
 
 window.addEventListener('touchmove', (e) => {
-  if (phase !== 'zip') return;
-  e.preventDefault();
-  const y   = e.touches[0].clientY;
-  const dy  = touchLastY - y;               // positive = scroll down
+  const y  = e.touches[0].clientY;
+  const dy = touchLastY - y;   // positive = swipe up = scroll down
   touchLastY = y;
-  const next = p + dy / window.innerHeight;
-  update(next);
-  if (p >= 1) openComplete();
+
+  if (phase === 'zip') {
+    e.preventDefault();
+    update(p + dy / window.innerHeight);
+    if (p >= 1) openComplete();
+  } else if (window.scrollY === 0 && dy < 0) {
+    // Swipe down at top of page → close zipper
+    e.preventDefault();
+    startClose();
+    update(p + dy / window.innerHeight); // dy negative → p decreases
+  }
 }, { passive: false });
 
 /* ── Keyboard accessibility ── */
 window.addEventListener('keydown', (e) => {
-  if (phase !== 'zip') return;
-  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-    e.preventDefault();
-    update(p + 0.12);
-    if (p >= 1) openComplete();
+  if (phase === 'zip') {
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      update(p + 0.12);
+      if (p >= 1) openComplete();
+    }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      update(p - 0.12);
+    }
+  } else {
+    if ((e.key === 'ArrowUp' || e.key === 'PageUp') && window.scrollY === 0) {
+      e.preventDefault();
+      startClose();
+      update(p - 0.12);
+    }
   }
-  if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-    e.preventDefault();
-    update(p - 0.12);
-  }
+
 });
 
 /* ── Initial render ── */
